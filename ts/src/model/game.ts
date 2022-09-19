@@ -17,7 +17,7 @@ class Game {
     this.topPaddle.update(moveTopPaddle);
     this.bottomPaddle.update(moveBottomPaddle);
     
-    const outOfBounds = this.ball.update();
+    const outOfBounds = this.ball.update(this.topPaddle, this.bottomPaddle);
 
     if (outOfBounds) {
       this.ball = new Ball(canvas.width / 2, canvas.height / 2);

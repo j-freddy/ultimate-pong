@@ -35,4 +35,8 @@ class Point {
     this.x += speed * Math.sin(direction);
     this.y -= speed * Math.cos(direction);
   }
+
+  dist(other: Point): number {
+    return Math.sqrt((this.x - other.x) ** 2 + (this.y - other.y) ** 2);
+  }
 }

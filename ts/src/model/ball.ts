@@ -6,7 +6,7 @@ class Ball {
 
   constructor(x: number, y: number) {
     this.pos = new Point(x, y);
-    this.dir = Math.PI * 0.6;
+    this.dir = Math.PI * 1.45;
   }
 
   get x(): number {
@@ -17,20 +17,36 @@ class Ball {
     return this.pos.getY();
   }
 
-  update(): boolean {
+  collideWithPaddle(paddle: Paddle): boolean {
+    let testPoint = new Point(this.x, this.y);
+
+    const paddleLeft = paddle.x - paddle.width/2;
+    const paddleRight = paddle.x + paddle.width/2;
+    const paddleTop = paddle.y - paddle.height/2;
+    const paddleBottom = paddle.y + paddle.height/2;
+
+    if (this.x < paddleLeft)   testPoint.setX(paddleLeft);
+    if (this.x > paddleRight)  testPoint.setX(paddleRight);
+    if (this.y < paddleTop)    testPoint.setY(paddleTop);
+    if (this.y > paddleBottom) testPoint.setY(paddleBottom);
+
+    return testPoint.dist(this.pos) < this.r;
+  }
+
+  update(topPaddle: Paddle, bottomPaddle: Paddle): boolean {
     this.pos.move(this.speed, this.dir);
 
-    // Bounce left edge
-    if (this.x < this.r) {
-      this.dir += 2 * (Math.PI * 2 - this.dir);
-      // Normalise direction
+    // Bounce left and right edge
+    if (this.x < this.r || this.x > canvas.width - this.r) {
+      this.dir -= 2 * this.dir;
       this.dir = mod(this.dir, Math.PI * 2);
     }
 
-    // Bounce right edge
-    if (this.x > canvas.width - this.r) {
-      this.dir -= 2 * this.dir;
-      // Normalise direction
+    // Paddle collision
+    if (
+      this.collideWithPaddle(topPaddle) || this.collideWithPaddle(bottomPaddle)
+    ) {
+      this.dir -= 2 * this.dir - Math.PI;
       this.dir = mod(this.dir, Math.PI * 2);
     }
 
