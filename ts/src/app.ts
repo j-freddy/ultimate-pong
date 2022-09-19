@@ -4,7 +4,17 @@ const ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
 const GAME = new Game();
 
 function tick() {
-  GAME.update();
+  const keyDown = GUI.getInstance().keyDownMappings;
+
+  let moveTopPaddle = MovePaddle.Still;
+  if (keyDown.get("a")) moveTopPaddle = MovePaddle.Left;
+  if (keyDown.get("d")) moveTopPaddle = MovePaddle.Right;
+
+  let moveBottomPaddle = MovePaddle.Still;
+  if (keyDown.get("ArrowLeft"))  moveBottomPaddle = MovePaddle.Left;
+  if (keyDown.get("ArrowRight")) moveBottomPaddle = MovePaddle.Right;
+
+  GAME.update(moveTopPaddle, moveBottomPaddle);
   GUI.getInstance().refresh();
 }
 

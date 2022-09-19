@@ -1,19 +1,19 @@
 class Ball {
   readonly r = 8;
-  private readonly speed = 2;
+  private readonly speed = 4;
   private readonly pos: Point;
   private dir: direction;
 
-  constructor() {
-    this.pos = new Point(240, 240);
+  constructor(x: number, y: number) {
+    this.pos = new Point(x, y);
     this.dir = Math.PI * 0.6;
   }
 
-  get x() {
+  get x(): number {
     return this.pos.getX();
   }
 
-  get y() {
+  get y(): number {
     return this.pos.getY();
   }
 

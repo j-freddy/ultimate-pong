@@ -15,6 +15,22 @@ class Point {
     return this.y;
   }
 
+  setX(x: number) {
+    this.x = x;
+  }
+
+  setY(y: number) {
+    this.y = y;
+  }
+
+  moveX(deltaX: number): void {
+    this.x += deltaX;
+  }
+
+  moveY(deltaY: number): void {
+    this.y += deltaY;
+  }
+
   move(speed: number, direction: direction): void {
     this.x += speed * Math.sin(direction);
     this.y -= speed * Math.cos(direction);

@@ -6,6 +6,12 @@
 */
 type direction = number;
 
+enum MovePaddle {
+  Still = "Still",
+  Left = "Left",
+  Right = "Right",
+}
+
 function mod(n: number, d: number): number {
   return ((n % d) + d) % d;
 }
