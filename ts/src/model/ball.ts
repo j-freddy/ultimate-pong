@@ -50,7 +50,6 @@ class Ball implements Circle {
       Collision.circleRectangle(this, topPaddle) &&
       this.lastCollision !== topPaddle
     ) {
-      // TODO Spin cannot make angle overflow and ball pass through paddle
       const spinAngle = Math.PI * 0.02 * topPaddle.getVel();
       this.dir += -2 * this.dir + Math.PI - spinAngle;
       this.dir = mod(this.dir, Math.PI * 2);

@@ -22,10 +22,10 @@ enum PointStatus {
 
 // TODO Add GUIEvent for animateBallBefore, etc.
 enum EffectEvent {
-  EffectFastBall = "effectFastBall",
-  EffectBigPaddle = "effectBigPaddle",
-  EffectSmallPaddle = "effectSmallPaddle",
-  EffectBlinkingBall = "effectBlinkingBall",
+  FastBall = "effectFastBall",
+  BigPaddle = "effectBigPaddle",
+  SmallPaddle = "effectSmallPaddle",
+  BlinkingBall = "effectBlinkingBall",
 }
 
 enum GameEvent {
@@ -56,4 +56,8 @@ function mod(n: number, d: number): number {
 
 function randomNumber(min: number, max: number) {
   return Math.random() * (max - min) + min;
+}
+
+function randomInt(min: number, max: number) {
+  return Math.floor(randomNumber(min, max + 1));
 }

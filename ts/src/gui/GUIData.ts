@@ -10,6 +10,7 @@ function getGUIData() {
     paddle: {
       width: u * 6,
       height: u,
+      bigWidth: u * 10,
     },
     effectBlock: {
       radius: u,

@@ -36,7 +36,15 @@ class Game {
   }
 
   private addNewEffectBlock(): void {
-    const block = new EffectBlock(Effect.FastBall, randomNumber(0, canvas.width), canvas.height / 2)
+    // TODO Indexing enums
+    const effects = [Effect.FastBall, Effect.BigPaddle];
+    const effect = effects[randomInt(0, effects.length - 1)];
+
+    const block = new EffectBlock(
+      effect,
+      randomNumber(0, canvas.width),
+      canvas.height / 2
+    );
     this.effectBlocks.push(block);
   }
 
@@ -85,14 +93,30 @@ class Game {
       this.addNewEffectBlock();
     });
 
-    handler.addEventListener(EffectEvent.EffectFastBall, _ => {
+    handler.addEventListener(EffectEvent.FastBall, _ => {
       this.ball.setFastSpeed();
 
-      if (this.effectsResidue.has(EffectEvent.EffectFastBall)) {
-        clearInterval(this.effectsResidue.get(EffectEvent.EffectFastBall));
-      }
+      this.clearResidue(EffectEvent.FastBall);
       const threadId = setTimeout(() => this.ball.setNormalSpeed(), 5000);
-      this.effectsResidue.set(EffectEvent.EffectFastBall, threadId);
+      this.effectsResidue.set(EffectEvent.FastBall, threadId);
     });
+
+    handler.addEventListener(EffectEvent.BigPaddle, _ => {
+      this.topPaddle.setBigWidth();
+      this.bottomPaddle.setBigWidth();
+
+      this.clearResidue(EffectEvent.BigPaddle);
+      const threadId = setTimeout(() => {
+        this.topPaddle.setNormalWidth();
+        this.bottomPaddle.setNormalWidth();
+      }, 5000);
+      this.effectsResidue.set(EffectEvent.BigPaddle, threadId);
+    });
+  }
+
+  private clearResidue(effectEvent: EffectEvent) {
+    if (this.effectsResidue.has(effectEvent)) {
+      clearInterval(this.effectsResidue.get(effectEvent));
+    }
   }
 }

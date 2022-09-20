@@ -15,7 +15,13 @@ const effectProperties = new Map<Effect, EffectProps>([
   [
     Effect.FastBall,
     {
-      eventName: EffectEvent.EffectFastBall,
+      eventName: EffectEvent.FastBall,
+    }
+  ],
+  [
+    Effect.BigPaddle,
+    {
+      eventName: EffectEvent.BigPaddle,
     }
   ],
 ]);

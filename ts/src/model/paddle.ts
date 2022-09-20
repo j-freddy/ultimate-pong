@@ -1,5 +1,9 @@
 class Paddle implements Rectangle {
-  readonly width = GUIData.paddle.width;
+  readonly normalWidth = GUIData.paddle.width;
+  readonly bigWidth = GUIData.paddle.bigWidth;
+
+  // TODO Dangerous public property
+  width;
   readonly height = GUIData.paddle.height;
   private readonly acc = GUIData.scaleFactor; 
   private readonly mu = 0.9;
@@ -7,7 +11,7 @@ class Paddle implements Rectangle {
   private vel: number;
 
   constructor(x: number, y: number) {
-    // Center
+    this.width = this.normalWidth;
     this.pos = new Point(x, y);
     this.vel = 0;
   }
@@ -22,6 +26,14 @@ class Paddle implements Rectangle {
 
   getVel(): number {
     return this.vel;
+  }
+
+  setNormalWidth(): void {
+    this.width = this.normalWidth;
+  }
+
+  setBigWidth(): void {
+    this.width = this.bigWidth;
   }
 
   update(movePaddle: MovePaddle) {
