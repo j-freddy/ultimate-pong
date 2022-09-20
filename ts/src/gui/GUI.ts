@@ -25,18 +25,24 @@ class GUI {
   }
 
   drawPaddle(paddle: Paddle): void {
+    ctx.save();
+    ctx.fillStyle = GUIData.paddle.colour;
     ctx.fillRect(
       paddle.x - paddle.width / 2,
       paddle.y - paddle.height / 2,
       paddle.width,
       paddle.height
     );
+    ctx.restore();
   }
 
   drawBall(ball: Ball): void {
+    ctx.save();
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
+    ctx.fillStyle = GUIData.ball.colour;
     ctx.fill();
+    ctx.restore();
   }
 
   drawEffectBlocks(): void {

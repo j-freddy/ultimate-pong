@@ -8,12 +8,12 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
-   sodipodi:docname="bigger-paddle.svg"
+   sodipodi:docname="big-paddle.svg"
+   xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <sodipodi:namedview
+   xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview
      id="namedview7"
      pagecolor="#ffffff"
      bordercolor="#999999"
@@ -24,38 +24,33 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      showgrid="false"
-     inkscape:zoom="2.3786088"
-     inkscape:cx="26.065657"
-     inkscape:cy="50.870072"
-     inkscape:window-width="1309"
-     inkscape:window-height="456"
+     inkscape:zoom="3.3638608"
+     inkscape:cx="1.3377486"
+     inkscape:cy="46.226645"
+     inkscape:window-width="1512"
+     inkscape:window-height="843"
      inkscape:window-x="0"
      inkscape:window-y="38"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="layer1" />
-  <defs
-     id="defs2" />
-  <g
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" /><defs
+     id="defs2" /><g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-64.995049,-33.93982)">
-    <circle
-       style="fill:#be4bdb;stroke:none;stroke-width:1.28889;stroke-linejoin:bevel;stroke-dasharray:1.28889, 7.7333;fill-opacity:1"
+     transform="translate(-64.995049,-33.93982)"><circle
+       style="fill:#212529;stroke:none;stroke-width:1.28889;stroke-linejoin:bevel;stroke-dasharray:1.28889, 7.7333;fill-opacity:1"
        id="path840"
        cx="73.461716"
        cy="42.406487"
-       r="8.4666662" />
-    <text
-       xml:space="preserve"
-       style="font-size:4.56154px;fill:#212529;fill-opacity:1;stroke:none;stroke-width:1.52051;stroke-linejoin:bevel;stroke-dasharray:1.52051, 9.12303"
-       x="69.109543"
-       y="44.062496"
-       id="text2412"><tspan
-         sodipodi:role="line"
-         id="tspan2410"
-         style="fill:#212529;fill-opacity:1;stroke-width:1.52051"
-         x="69.109543"
-         y="44.062496">BIG</tspan></text>
-  </g>
-</svg>
+       r="8.4666662" /><circle
+       style="fill:#12b886;fill-opacity:1;stroke:none;stroke-width:1.04723;stroke-linejoin:bevel;stroke-dasharray:1.04723, 6.28331"
+       id="circle844"
+       cx="73.461716"
+       cy="42.406487"
+       r="6.8791666" /><rect
+       style="fill:#212529;stroke:#212529;stroke-width:1.05833331;stroke-linejoin:bevel;stroke-dasharray:none"
+       id="rect898"
+       width="6.7429018"
+       height="2.4382815"
+       x="70.090263"
+       y="41.187344" /></g></svg>
