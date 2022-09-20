@@ -6,6 +6,8 @@
 */
 type direction = number;
 
+type Surface = Paddle | null;
+
 enum MovePaddle {
   Still = "Still",
   Left = "Left",

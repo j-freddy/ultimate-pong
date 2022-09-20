@@ -3,6 +3,7 @@ class Ball {
   private readonly speed = 4;
   private readonly pos: Point;
   private dir: direction;
+  private lastCollision?: Surface;
 
   constructor(x: number, y: number) {
     this.pos = new Point(x, y);
@@ -40,17 +41,25 @@ class Ball {
     if (this.x < this.r || this.x > canvas.width - this.r) {
       this.dir -= 2 * this.dir;
       this.dir = mod(this.dir, Math.PI * 2);
+      // TODO Refactor when edges are replaced with walls
+      this.lastCollision = null;
     }
 
     // Paddle collision
-    if (
-      this.collideWithPaddle(topPaddle) || this.collideWithPaddle(bottomPaddle)
-    ) {
+    if (this.collideWithPaddle(topPaddle) && this.lastCollision !== topPaddle) {
       // TODO Add spin depending on current paddle velocity
       // Paddle moving right -> Add angle
       // Padding moving left -> Subtract angle
       this.dir -= 2 * this.dir - Math.PI;
       this.dir = mod(this.dir, Math.PI * 2);
+      this.lastCollision = topPaddle;
+    } else if (
+      this.collideWithPaddle(bottomPaddle) &&
+      this.lastCollision !== bottomPaddle
+    ) {
+      this.dir -= 2 * this.dir - Math.PI;
+      this.dir = mod(this.dir, Math.PI * 2);
+      this.lastCollision = bottomPaddle;
     }
 
     // Out of bounds
