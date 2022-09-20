@@ -39,6 +39,32 @@ class GUI {
     ctx.fill();
   }
 
+  drawEffectBlocks(): void {
+    for (const effectBlock of this.game.getEffectBlocks()) {
+      // TODO This is slow
+      // Consider having a Map: Effect -> Image
+      let image: HTMLImageElement;
+
+      switch (effectBlock.effect) {
+        case Effect.FastBall:
+          image = img.effectFastBall;
+          break;
+        case Effect.BigPaddle:
+          image = img.effectBigPaddle;
+          break;
+        case Effect.SmallPaddle:
+          image = img.effectSmallPaddle;
+          break;
+        case Effect.BlinkingBall:
+          image = img.effectBlinkingBall;
+          break;
+      }
+
+      const d = effectBlock.r * 2;
+      ctx.drawImage(image, effectBlock.x - d/2, effectBlock.y - d/2, d, d);
+    }
+  }
+
   drawBackground(): void {
     ctx.drawImage(img.background, 0, 0, canvas.width, canvas.height);
   }
@@ -53,6 +79,7 @@ class GUI {
     this.drawBackground();
     this.drawPaddle(this.game.topPaddle);
     this.drawPaddle(this.game.bottomPaddle);
+    this.drawEffectBlocks();
     this.drawBall(this.game.getBall());
     this.drawForeground();
   }

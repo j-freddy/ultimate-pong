@@ -45,7 +45,11 @@ class Ball {
     return testPoint.dist(this.pos) < this.r;
   }
 
-  update(topPaddle: Paddle, bottomPaddle: Paddle): boolean {
+  update(
+    topPaddle: Paddle,
+    bottomPaddle: Paddle,
+    eventHandler: EventTarget
+  ): boolean {
     this.pos.move(this.speed, this.dir);
 
     // Bounce left and right edge
@@ -65,6 +69,7 @@ class Ball {
       this.dir = mod(this.dir, Math.PI * 2);
 
       this.lastCollision = topPaddle;
+      eventHandler.dispatchEvent(new Event("ballPaddleCollision"));
     } else if (
       this.collideWithPaddle(bottomPaddle) &&
       this.lastCollision !== bottomPaddle
@@ -74,6 +79,7 @@ class Ball {
       this.dir = mod(this.dir, Math.PI * 2);
 
       this.lastCollision = bottomPaddle;
+      eventHandler.dispatchEvent(new Event("ballPaddleCollision"));
     }
 
     // Out of bounds
