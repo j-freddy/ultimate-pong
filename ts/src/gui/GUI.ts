@@ -39,12 +39,22 @@ class GUI {
     ctx.fill();
   }
 
+  drawBackground(): void {
+    ctx.drawImage(img.background, 0, 0, canvas.width, canvas.height);
+  }
+
+  drawForeground(): void {
+    ctx.drawImage(img.foreground, 0, 0, canvas.width, canvas.height);
+  }
+
   refresh(): void {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    this.drawBackground();
     this.drawPaddle(this.game.topPaddle);
     this.drawPaddle(this.game.bottomPaddle);
     this.drawBall(this.game.getBall());
+    this.drawForeground();
   }
 
   private startObservables(): void {
