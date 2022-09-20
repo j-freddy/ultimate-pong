@@ -12,6 +12,11 @@ class Game {
     this.topPaddle = new Paddle(canvas.width / 2, 32);
     this.bottomPaddle = new Paddle(canvas.width / 2, canvas.height - 32);
     this.prepareNewPoint();
+
+    // TODO Delete
+    setTimeout(() => {
+      this.eventHandler.dispatchEvent(new Event("effectFastBall"));
+    }, 2000);
   }
 
   getBall(): Ball {
@@ -42,9 +47,14 @@ class Game {
   }
 
   private startEventListeners(): void {
-    this.eventHandler.addEventListener("ballBefore", _ => {
+    this.eventHandler.addEventListener("ballBefore", e => {
       this.eventHandler.dispatchEvent(new Event("animateBallBefore"));
       setTimeout(() => this.pointStatus = PointStatus.Playing, 1000);
+    });
+
+    this.eventHandler.addEventListener("effectFastBall", _ => {
+      this.ball.setFastSpeed();
+      setTimeout(() => this.ball.setNormalSpeed(), 5000);
     });
   }
 }

@@ -1,6 +1,8 @@
 class Ball {
-  readonly r = 8;
-  private readonly speed = 4;
+  readonly r = GUIData.ball.radius;
+  private readonly normalSpeed = 4 * GUIData.scaleFactor;
+  private readonly fastSpeed = 6 * GUIData.scaleFactor;
+  private speed: number;
   private readonly pos: Point;
   private dir: direction;
   private lastCollision?: Surface;
@@ -8,6 +10,7 @@ class Ball {
   constructor(x: number, y: number) {
     this.pos = new Point(x, y);
     this.dir = randomNumber(Math.PI * 0.75, Math.PI * 1.25);
+    this.speed = this.normalSpeed;
   }
 
   get x(): number {
@@ -16,6 +19,14 @@ class Ball {
 
   get y(): number {
     return this.pos.getY();
+  }
+
+  setNormalSpeed(): void {
+    this.speed = this.normalSpeed;
+  }
+
+  setFastSpeed(): void {
+    this.speed = this.fastSpeed;
   }
 
   private collideWithPaddle(paddle: Paddle): boolean {

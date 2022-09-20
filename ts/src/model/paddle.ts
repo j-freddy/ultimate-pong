@@ -1,7 +1,7 @@
 class Paddle {
-  readonly width = 16 * 6;
-  readonly height = 16;
-  private readonly acc = 1; 
+  readonly width = GUIData.paddle.width;
+  readonly height = GUIData.paddle.height;
+  private readonly acc = GUIData.scaleFactor; 
   private readonly mu = 0.9;
   private readonly pos: Point;
   private vel: number;

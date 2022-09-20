@@ -1,6 +1,8 @@
 const canvas = <HTMLCanvasElement> document.getElementById("main-canvas");
 const ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
 
+const GUIData = getGUIData();
+
 const GAME = new Game(canvas);
 
 function tick() {
@@ -25,6 +27,7 @@ function loop() {
 
 function main() {
   console.log("Hello world!");
+
   GUI.getInstance(GAME).refresh();
   loop();
 }
