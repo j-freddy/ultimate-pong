@@ -57,5 +57,9 @@ class GUI {
     window.addEventListener("keyup", e => {
       this.keyDown.set(e.key, false);
     });
+
+    canvas.addEventListener("animateBallBefore", _ => {
+      console.log("Event captured: animateBallBefore");
+    });
   }
 }

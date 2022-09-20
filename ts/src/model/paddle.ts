@@ -1,5 +1,5 @@
 class Paddle {
-  readonly width = 64;
+  readonly width = 16 * 6;
   readonly height = 16;
   private readonly acc = 1; 
   private readonly mu = 0.9;

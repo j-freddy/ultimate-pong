@@ -12,6 +12,12 @@ enum MovePaddle {
   Right = "Right",
 }
 
+enum PointStatus {
+  Before = "Before",
+  Playing = "Playing",
+  After = "After",
+}
+
 function mod(n: number, d: number): number {
   return ((n % d) + d) % d;
 }

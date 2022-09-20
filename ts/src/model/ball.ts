@@ -6,7 +6,7 @@ class Ball {
 
   constructor(x: number, y: number) {
     this.pos = new Point(x, y);
-    this.dir = Math.PI * 1.45;
+    this.dir = Math.PI * 1.2;
   }
 
   get x(): number {
@@ -17,7 +17,7 @@ class Ball {
     return this.pos.getY();
   }
 
-  collideWithPaddle(paddle: Paddle): boolean {
+  private collideWithPaddle(paddle: Paddle): boolean {
     let testPoint = new Point(this.x, this.y);
 
     const paddleLeft = paddle.x - paddle.width/2;
@@ -46,6 +46,9 @@ class Ball {
     if (
       this.collideWithPaddle(topPaddle) || this.collideWithPaddle(bottomPaddle)
     ) {
+      // TODO Add spin depending on current paddle velocity
+      // Paddle moving right -> Add angle
+      // Padding moving left -> Subtract angle
       this.dir -= 2 * this.dir - Math.PI;
       this.dir = mod(this.dir, Math.PI * 2);
     }

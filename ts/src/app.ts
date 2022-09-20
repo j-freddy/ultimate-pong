@@ -1,7 +1,7 @@
 const canvas = <HTMLCanvasElement> document.getElementById("main-canvas");
 const ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
 
-const GAME = new Game();
+const GAME = new Game(canvas);
 
 function tick() {
   const keyDown = GUI.getInstance().keyDownMappings;
