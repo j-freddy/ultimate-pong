@@ -20,6 +20,10 @@ class Paddle {
     return this.pos.getY();
   }
 
+  getVel(): number {
+    return this.vel;
+  }
+
   update(movePaddle: MovePaddle) {
     const prevX = this.x;
 

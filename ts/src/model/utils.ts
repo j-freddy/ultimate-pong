@@ -23,3 +23,7 @@ enum PointStatus {
 function mod(n: number, d: number): number {
   return ((n % d) + d) % d;
 }
+
+function randomNumber(min: number, max: number) {
+  return Math.random() * (max - min) + min;
+}

@@ -7,7 +7,7 @@ class Ball {
 
   constructor(x: number, y: number) {
     this.pos = new Point(x, y);
-    this.dir = Math.PI * 1.2;
+    this.dir = randomNumber(Math.PI * 0.75, Math.PI * 1.25);
   }
 
   get x(): number {
@@ -46,19 +46,22 @@ class Ball {
     }
 
     // Paddle collision
+    // TODO Refactor
     if (this.collideWithPaddle(topPaddle) && this.lastCollision !== topPaddle) {
-      // TODO Add spin depending on current paddle velocity
-      // Paddle moving right -> Add angle
-      // Padding moving left -> Subtract angle
-      this.dir -= 2 * this.dir - Math.PI;
+      // TODO Spin cannot make angle overflow and ball pass through paddle
+      const spinAngle = Math.PI * 0.02 * topPaddle.getVel();
+      this.dir += -2 * this.dir + Math.PI - spinAngle;
       this.dir = mod(this.dir, Math.PI * 2);
+
       this.lastCollision = topPaddle;
     } else if (
       this.collideWithPaddle(bottomPaddle) &&
       this.lastCollision !== bottomPaddle
     ) {
-      this.dir -= 2 * this.dir - Math.PI;
+      const spinAngle = Math.PI * 0.02 * bottomPaddle.getVel();
+      this.dir += -2 * this.dir + Math.PI + spinAngle;
       this.dir = mod(this.dir, Math.PI * 2);
+
       this.lastCollision = bottomPaddle;
     }
 
