@@ -1,9 +1,9 @@
-class Paddle {
+class Paddle implements Rectangle {
   readonly width = GUIData.paddle.width;
   readonly height = GUIData.paddle.height;
   private readonly acc = GUIData.scaleFactor; 
   private readonly mu = 0.9;
-  private readonly pos: Point;
+  readonly pos: Point;
   private vel: number;
 
   constructor(x: number, y: number) {

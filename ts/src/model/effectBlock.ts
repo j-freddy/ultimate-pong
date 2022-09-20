@@ -1,7 +1,7 @@
-class EffectBlock {
+class EffectBlock implements Circle {
   readonly r = GUIData.effectBlock.radius;
   readonly effect: Effect;
-  private readonly pos: Point;
+  readonly pos: Point;
 
   constructor(effect: Effect, x: number, y: number) {
     this.effect = effect;

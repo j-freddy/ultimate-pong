@@ -5,8 +5,8 @@
   West -> Math.PI * 3/2
 */
 type direction = number;
-
 type Surface = Paddle | null;
+type threadId = number;
 
 enum MovePaddle {
   Still = "Still",
@@ -18,6 +18,36 @@ enum PointStatus {
   Before = "Before",
   Playing = "Playing",
   After = "After",
+}
+
+// TODO Add GUIEvent for animateBallBefore, etc.
+enum EffectEvent {
+  EffectFastBall = "effectFastBall",
+  EffectBigPaddle = "effectBigPaddle",
+  EffectSmallPaddle = "effectSmallPaddle",
+  EffectBlinkingBall = "effectBlinkingBall",
+}
+
+enum GameEvent {
+  BallBefore = "ballBefore",
+  BallPaddleCollision = "ballPaddleCollision",
+}
+
+type ModelEvent = EffectEvent | GameEvent;
+
+interface Circle {
+  x: number,
+  y: number,
+  r: number,
+  pos: Point,
+}
+
+interface Rectangle {
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  pos: Point,
 }
 
 function mod(n: number, d: number): number {

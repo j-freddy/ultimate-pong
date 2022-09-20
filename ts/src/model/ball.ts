@@ -1,9 +1,9 @@
-class Ball {
+class Ball implements Circle {
   readonly r = GUIData.ball.radius;
   private readonly normalSpeed = 4 * GUIData.scaleFactor;
   private readonly fastSpeed = 6 * GUIData.scaleFactor;
   private speed: number;
-  private readonly pos: Point;
+  readonly pos: Point;
   private dir: direction;
   private lastCollision?: Surface;
 
@@ -29,22 +29,6 @@ class Ball {
     this.speed = this.fastSpeed;
   }
 
-  private collideWithPaddle(paddle: Paddle): boolean {
-    let testPoint = new Point(this.x, this.y);
-
-    const paddleLeft = paddle.x - paddle.width/2;
-    const paddleRight = paddle.x + paddle.width/2;
-    const paddleTop = paddle.y - paddle.height/2;
-    const paddleBottom = paddle.y + paddle.height/2;
-
-    if (this.x < paddleLeft)   testPoint.setX(paddleLeft);
-    if (this.x > paddleRight)  testPoint.setX(paddleRight);
-    if (this.y < paddleTop)    testPoint.setY(paddleTop);
-    if (this.y > paddleBottom) testPoint.setY(paddleBottom);
-
-    return testPoint.dist(this.pos) < this.r;
-  }
-
   update(
     topPaddle: Paddle,
     bottomPaddle: Paddle,
@@ -62,16 +46,19 @@ class Ball {
 
     // Paddle collision
     // TODO Refactor
-    if (this.collideWithPaddle(topPaddle) && this.lastCollision !== topPaddle) {
+    if (
+      Collision.circleRectangle(this, topPaddle) &&
+      this.lastCollision !== topPaddle
+    ) {
       // TODO Spin cannot make angle overflow and ball pass through paddle
       const spinAngle = Math.PI * 0.02 * topPaddle.getVel();
       this.dir += -2 * this.dir + Math.PI - spinAngle;
       this.dir = mod(this.dir, Math.PI * 2);
 
       this.lastCollision = topPaddle;
-      eventHandler.dispatchEvent(new Event("ballPaddleCollision"));
+      eventHandler.dispatchEvent(new Event(GameEvent.BallPaddleCollision));
     } else if (
-      this.collideWithPaddle(bottomPaddle) &&
+      Collision.circleRectangle(this, bottomPaddle) &&
       this.lastCollision !== bottomPaddle
     ) {
       const spinAngle = Math.PI * 0.02 * bottomPaddle.getVel();
@@ -79,7 +66,7 @@ class Ball {
       this.dir = mod(this.dir, Math.PI * 2);
 
       this.lastCollision = bottomPaddle;
-      eventHandler.dispatchEvent(new Event("ballPaddleCollision"));
+      eventHandler.dispatchEvent(new Event(GameEvent.BallPaddleCollision));
     }
 
     // Out of bounds
