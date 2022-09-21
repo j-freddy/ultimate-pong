@@ -1,5 +1,6 @@
 class Ball implements Circle {
   readonly r = GUIData.ball.radius;
+  private readonly angleLimit = Math.PI * 0.12;
   private readonly normalSpeed = 4 * GUIData.scaleFactor;
   private readonly fastSpeed = 6 * GUIData.scaleFactor;
   private speed: number;
@@ -29,6 +30,40 @@ class Ball implements Circle {
     this.speed = this.fastSpeed;
   }
 
+  private normaliseDirection(): void {
+    this.dir = mod(this.dir, Math.PI * 2);
+  }
+
+  private constrainDirection(): boolean {
+    this.normaliseDirection();
+
+    const NEQuadrant: direction = Math.PI / 2 - this.angleLimit;
+    if (this.dir > NEQuadrant && this.dir < Math.PI / 2) {
+      this.dir = NEQuadrant;
+      return true;
+    }
+
+    const SEQuadrant: direction = Math.PI / 2 + this.angleLimit;
+    if (this.dir > Math.PI / 2 && this.dir < SEQuadrant) {
+      this.dir = SEQuadrant;
+      return true;
+    }
+
+    const SWQuadrant: direction = Math.PI * 3/2 - this.angleLimit;
+    if (this.dir > SWQuadrant && this.dir < Math.PI * 3/2) {
+      this.dir = SWQuadrant;
+      return true;
+    }
+
+    const NWQuadrant: direction = Math.PI * 3/2 + this.angleLimit;
+    if (this.dir > Math.PI * 3/2 && this.dir < NWQuadrant) {
+      this.dir = NWQuadrant;
+      return true;
+    }
+
+    return false;
+  }
+
   update(
     topPaddle: Paddle,
     bottomPaddle: Paddle,
@@ -39,7 +74,7 @@ class Ball implements Circle {
     // Bounce left and right edge
     if (this.x < this.r || this.x > canvas.width - this.r) {
       this.dir -= 2 * this.dir;
-      this.dir = mod(this.dir, Math.PI * 2);
+      this.normaliseDirection();
       // TODO Refactor when edges are replaced with walls
       this.lastCollision = null;
     }
@@ -50,9 +85,9 @@ class Ball implements Circle {
       Collision.circleRectangle(this, topPaddle) &&
       this.lastCollision !== topPaddle
     ) {
-      const spinAngle = Math.PI * 0.02 * topPaddle.getVel();
+      const spinAngle = Math.PI * topPaddle.spinFactor * topPaddle.getVel();
       this.dir += -2 * this.dir + Math.PI - spinAngle;
-      this.dir = mod(this.dir, Math.PI * 2);
+      console.log(this.constrainDirection());
 
       this.lastCollision = topPaddle;
       eventHandler.dispatchEvent(new Event(GameEvent.BallPaddleCollision));
@@ -60,9 +95,10 @@ class Ball implements Circle {
       Collision.circleRectangle(this, bottomPaddle) &&
       this.lastCollision !== bottomPaddle
     ) {
-      const spinAngle = Math.PI * 0.02 * bottomPaddle.getVel();
+      const spinAngle
+        = Math.PI * bottomPaddle.spinFactor * bottomPaddle.getVel();
       this.dir += -2 * this.dir + Math.PI + spinAngle;
-      this.dir = mod(this.dir, Math.PI * 2);
+      console.log(this.constrainDirection());
 
       this.lastCollision = bottomPaddle;
       eventHandler.dispatchEvent(new Event(GameEvent.BallPaddleCollision));

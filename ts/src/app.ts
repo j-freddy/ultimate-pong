@@ -27,7 +27,6 @@ function loop() {
 
 function main() {
   let bugs = "";
-  bugs += "Spin can make angle overflow and ball pass through paddle\n";
   bugs += "Increasing paddle size can make paddle stuck on left/right edge\n";
 
   console.log("Hello world!");

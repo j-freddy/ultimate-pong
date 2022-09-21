@@ -83,7 +83,6 @@ class Game {
   private startEventListeners(): void {
     const handler = this.eventHandler;
 
-    // TODO Refactor to use enums
     handler.addEventListener(GameEvent.BallBefore, _ => {
       handler.dispatchEvent(new Event("animateBallBefore"));
       setTimeout(() => this.pointStatus = PointStatus.Playing, 1000);

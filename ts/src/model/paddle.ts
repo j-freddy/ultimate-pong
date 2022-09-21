@@ -1,6 +1,7 @@
 class Paddle implements Rectangle {
   readonly normalWidth = GUIData.paddle.width;
   readonly bigWidth = GUIData.paddle.bigWidth;
+  readonly spinFactor = 0.012;
 
   // TODO Dangerous public property
   width;
