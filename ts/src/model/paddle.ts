@@ -48,9 +48,15 @@ class Paddle implements Rectangle {
     this.vel *= this.mu;
 
     // Hit edge
-    if (this.x < this.width / 2 || this.x > canvas.width - this.width / 2) {
+    const leftEdge = this.width / 2;
+    const rightEdge = canvas.width - this.width / 2;
+
+    if (this.x < leftEdge || this.x > rightEdge) {
       this.vel = 0;
       this.pos.setX(prevX);
+
+      if (this.x < leftEdge)  this.pos.setX( leftEdge + 0.1);
+      if (this.x > rightEdge) this.pos.setX(rightEdge - 0.1);
     }
   }
 }
