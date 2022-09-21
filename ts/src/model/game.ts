@@ -10,6 +10,7 @@ class Game {
   // To reset the duration of an effect if ball hits an effect block while the
   // same effect is still in play
   private effectsResidue: Map<EffectEvent, number>;
+  private rallyCount!: number;
 
   constructor(eventHandler: EventTarget) {
     this.eventHandler = eventHandler;
@@ -31,6 +32,7 @@ class Game {
   private prepareNewPoint(): void {
     this.ball = new Ball(canvas.width / 2, canvas.height / 2);
     this.effectBlocks = [];
+    this.rallyCount = 0;
     this.pointStatus = PointStatus.Before;
     this.eventHandler.dispatchEvent(new Event(GameEvent.BallBefore));
   }
@@ -89,7 +91,12 @@ class Game {
     });
 
     handler.addEventListener(GameEvent.BallPaddleCollision, _ => {
-      this.addNewEffectBlock();
+      this.rallyCount++;
+
+      // Bit of a janky way to add effect blocks
+      if (this.rallyCount === 5 || this.rallyCount > 5 && Math.random() < 0.3) {
+        this.addNewEffectBlock();
+      }
     });
 
     handler.addEventListener(EffectEvent.FastBall, _ => {

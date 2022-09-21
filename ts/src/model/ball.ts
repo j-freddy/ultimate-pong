@@ -1,8 +1,8 @@
 class Ball implements Circle {
   readonly r = GUIData.ball.radius;
   private readonly angleLimit = Math.PI * 0.12;
-  private readonly normalSpeed = 4 * GUIData.scaleFactor;
-  private readonly fastSpeed = 6 * GUIData.scaleFactor;
+  private readonly normalSpeed = 3.8 * GUIData.scaleFactor;
+  private readonly fastSpeed = 5.6 * GUIData.scaleFactor;
   private speed: number;
   readonly pos: Point;
   private dir: direction;
@@ -87,7 +87,7 @@ class Ball implements Circle {
     ) {
       const spinAngle = Math.PI * topPaddle.spinFactor * topPaddle.getVel();
       this.dir += -2 * this.dir + Math.PI - spinAngle;
-      console.log(this.constrainDirection());
+      this.constrainDirection();
 
       this.lastCollision = topPaddle;
       eventHandler.dispatchEvent(new Event(GameEvent.BallPaddleCollision));
@@ -98,8 +98,7 @@ class Ball implements Circle {
       const spinAngle
         = Math.PI * bottomPaddle.spinFactor * bottomPaddle.getVel();
       this.dir += -2 * this.dir + Math.PI + spinAngle;
-      console.log(this.constrainDirection());
-
+      this.constrainDirection();
       this.lastCollision = bottomPaddle;
       eventHandler.dispatchEvent(new Event(GameEvent.BallPaddleCollision));
     }

@@ -7,7 +7,7 @@ class Paddle implements Rectangle {
   width;
   readonly height = GUIData.paddle.height;
   private readonly acc = GUIData.scaleFactor; 
-  private readonly mu = 0.9;
+  private readonly mu = 0.88;
   readonly pos: Point;
   private vel: number;
 

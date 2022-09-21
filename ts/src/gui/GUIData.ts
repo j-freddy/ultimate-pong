@@ -9,7 +9,7 @@ function getGUIData() {
       colour: "#1c7ed6",
     },
     paddle: {
-      width: u * 6,
+      width: u * 7,
       height: u,
       bigWidth: u * 10,
       colour: "#212529",
