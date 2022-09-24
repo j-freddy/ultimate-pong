@@ -1,7 +1,14 @@
+enum GUIEvent {
+  AnimateBallBefore = "animateBallBefore",
+}
+
 class GUI {
   private static instance: GUI;
   private game: Game;
   private keyDown = new Map<string, boolean>();
+
+  // TODO Do these properties belong here?
+  private ballAlpha = 1;
 
   private constructor(game: Game) {
     this.game = game;
@@ -41,6 +48,7 @@ class GUI {
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
     ctx.fillStyle = GUIData.ball.colour;
+    ctx.globalAlpha = this.ballAlpha;
     ctx.fill();
     ctx.restore();
   }
@@ -101,8 +109,10 @@ class GUI {
       this.keyDown.set(e.key, false);
     });
 
-    canvas.addEventListener("animateBallBefore", _ => {
-      console.log("Event captured: animateBallBefore");
+    canvas.addEventListener(GUIEvent.AnimateBallBefore, _ => {
+      this.ballAlpha = 0;
+
+      gsap.to(this, { ballAlpha: 1 });
     });
   }
 }

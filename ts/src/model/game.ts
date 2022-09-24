@@ -29,6 +29,10 @@ class Game {
     return this.effectBlocks;
   }
 
+  getPointStatus(): PointStatus {
+    return this.pointStatus;
+  }
+
   private prepareNewPoint(): void {
     this.ball = new Ball(canvas.width / 2, canvas.height / 2);
     this.effectBlocks = [];
@@ -86,7 +90,7 @@ class Game {
     const handler = this.eventHandler;
 
     handler.addEventListener(GameEvent.BallBefore, _ => {
-      handler.dispatchEvent(new Event("animateBallBefore"));
+      handler.dispatchEvent(new Event(GUIEvent.AnimateBallBefore));
       setTimeout(() => this.pointStatus = PointStatus.Playing, 1000);
     });
 
@@ -94,7 +98,8 @@ class Game {
       this.rallyCount++;
 
       // Bit of a janky way to add effect blocks
-      if (this.rallyCount === 5 || this.rallyCount > 5 && Math.random() < 0.3) {
+      // Every 3rd hit from the 4th shot
+      if (this.rallyCount % 3 === 1 && this.rallyCount >= 4) {
         this.addNewEffectBlock();
       }
     });

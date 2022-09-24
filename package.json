@@ -1,0 +1,19 @@
+{
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
+  },
+  "scripts": {
+    "clean": "rm -rf dist/",
+    "build": "copyfiles -u 1 ts/src/lib/min/* dist/ && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/j-freddy/ultimate-pong.git"
+  },
+  "author": "Freddy Jiang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/j-freddy/ultimate-pong/issues"
+  },
+  "homepage": "https://github.com/j-freddy/ultimate-pong#readme"
+}

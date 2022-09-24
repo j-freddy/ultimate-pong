@@ -1,9 +1,9 @@
 all: compile
 
 compile:
-	tsc
+	npm run build
 
 clean:
-	rm -rf dist
+	npm run clean
 
 .PHONY: all compile clean
