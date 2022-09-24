@@ -22,6 +22,10 @@ class Ball implements Circle {
     return this.pos.getY();
   }
 
+  getDir(): direction {
+    return this.dir;
+  }
+
   setNormalSpeed(): void {
     this.speed = this.normalSpeed;
   }

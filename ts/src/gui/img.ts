@@ -1,6 +1,7 @@
 const img = {
   foreground: new Image(),
   background: new Image(),
+  arrowUp: new Image(),
   effectFastBall: new Image(),
   effectBigPaddle: new Image(),
   effectSmallPaddle: new Image(),
@@ -9,6 +10,7 @@ const img = {
 
 img.foreground.src = "img/foreground.svg";
 img.background.src = "img/background.svg";
+img.arrowUp.src = "img/arrow-up.svg";
 img.effectFastBall.src = "img/effects/fast-ball.svg";
 img.effectBigPaddle.src = "img/effects/big-paddle.svg";
 img.effectSmallPaddle.src = "img/effects/small-paddle.svg";

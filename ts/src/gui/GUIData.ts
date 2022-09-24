@@ -7,6 +7,7 @@ function getGUIData() {
     ball: {
       radius: u / 2,
       colour: "#1c7ed6",
+      arrowWidth: u * 2,
     },
     paddle: {
       width: u * 7,

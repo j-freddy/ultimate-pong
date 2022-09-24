@@ -53,6 +53,16 @@ class GUI {
     ctx.restore();
   }
 
+  drawArrow(): void {
+    const ball = this.game.getBall();
+    const w = GUIData.ball.arrowWidth;
+    ctx.save();
+    ctx.translate(ball.x, ball.y);
+    ctx.rotate(ball.getDir());
+    ctx.drawImage(img.arrowUp, -w/2, -w/2, w, w);
+    ctx.restore();
+  }
+
   drawEffectBlocks(): void {
     for (const effectBlock of this.game.getEffectBlocks()) {
       // TODO This is slow
@@ -95,6 +105,9 @@ class GUI {
     this.drawPaddle(this.game.bottomPaddle);
     this.drawEffectBlocks();
     this.drawBall(this.game.getBall());
+    if (this.game.getPointStatus() === PointStatus.Before) {
+      this.drawArrow();
+    }
     this.drawForeground();
   }
 
