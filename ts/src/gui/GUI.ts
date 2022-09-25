@@ -71,6 +71,15 @@ class GUI {
     ctx.restore();
   }
 
+  drawScore(): void {
+    // ctx.save();
+    // const score = `${this.game.getBottomScore()} : ${this.game.getTopScore()}`;
+    // ctx.font = "36px serif";
+    // ctx.textAlign = "center";
+    // ctx.fillText(score, canvas.width / 2, canvas.height / 2);
+    // ctx.restore();
+  }
+
   drawEffectBlocks(): void {
     for (const effectBlock of this.game.getEffectBlocks()) {
       // TODO This is slow
@@ -117,6 +126,7 @@ class GUI {
       this.drawBall(this.game.getBall());
       if (this.game.getPointStatus() === PointStatus.Before) {
         this.drawArrow();
+        this.drawScore();
       }
     }
 

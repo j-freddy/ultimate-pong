@@ -21,9 +21,12 @@ function tick() {
   GUI.getInstance().refresh();
 }
 
-function loop() {
-  tick();
-  requestAnimationFrame(loop);
+// Do not use requestAnimationFrame for projects involving moving objects
+// As it syncs calls to your refresh rate
+// Which depends per user
+function startLoop() {
+  const fps = 120;
+  setInterval(tick, 1000 / fps);
 }
 
 function main() {
@@ -42,7 +45,7 @@ function main() {
     if (e.key === " ") {
       gameStarted = true;
       canvas.dispatchEvent(new Event(GameEvent.BallBefore));
-      loop();
+      startLoop();
     }
   });
 }

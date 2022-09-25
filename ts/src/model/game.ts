@@ -11,6 +11,8 @@ class Game {
   // same effect is still in play
   private effectsResidue: Map<EffectEvent, number>;
   private rallyCount!: number;
+  private topScore: number;
+  private bottomScore: number;
 
   constructor(eventHandler: EventTarget) {
     this.eventHandler = eventHandler;
@@ -18,6 +20,8 @@ class Game {
     this.topPaddle = new Paddle(canvas.width / 2, 32);
     this.bottomPaddle = new Paddle(canvas.width / 2, canvas.height - 32);
     this.effectsResidue = new Map<EffectEvent, number>();
+    this.topScore = 0;
+    this.bottomScore = 0;
     this.init();
   }
 
@@ -31,6 +35,14 @@ class Game {
 
   getPointStatus(): PointStatus {
     return this.pointStatus;
+  }
+
+  getTopScore(): number {
+    return this.topScore;
+  }
+
+  getBottomScore(): number {
+    return this.bottomScore;
   }
 
   private init(): void {
@@ -65,9 +77,22 @@ class Game {
     switch (this.pointStatus) {
       case PointStatus.Playing:
         // Update ball
-        const outOfBounds = this.ball.update(
+        const pointWinner = this.ball.update(
           this.topPaddle, this.bottomPaddle, this.eventHandler
         );
+
+        // Check point ends
+        if (pointWinner) {
+          if (pointWinner === PointWinner.TopPlayer) {
+            this.topScore++;
+          } else {
+            this.bottomScore++;
+          }
+
+          this.pointStatus = PointStatus.After;
+          this.eventHandler.dispatchEvent(new Event(GameEvent.BallAfter));
+          break;
+        }
 
         // Check ball collide with effect blocks
         for (let i = this.effectBlocks.length - 1; i >= 0; i--) {
@@ -78,14 +103,8 @@ class Game {
             this.eventHandler.dispatchEvent(new Event(eventName));
           }
         }
-        
-        // Check point ends
-        if (outOfBounds) {
-          this.pointStatus = PointStatus.After;
-          this.eventHandler.dispatchEvent(new Event(GameEvent.BallAfter));
-        }
-
         break;
+
       default:
         break;
     }

@@ -72,7 +72,7 @@ class Ball implements Circle {
     topPaddle: Paddle,
     bottomPaddle: Paddle,
     eventHandler: EventTarget
-  ): boolean {
+  ): PointWinner | void {
     this.pos.move(this.speed, this.dir);
 
     // Bounce left and right edge
@@ -108,6 +108,7 @@ class Ball implements Circle {
     }
 
     // Out of bounds
-    return this.y < -this.r || this.y > canvas.height + this.r;
+    if (this.y < -this.r)                return PointWinner.BottomPlayer;
+    if (this.y > canvas.height + this.r) return PointWinner.TopPlayer;
   }
 }
