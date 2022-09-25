@@ -3,6 +3,7 @@ const ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
 
 const GUIData = getGUIData();
 
+let gameStarted = false;
 const GAME = new Game(canvas);
 
 function tick() {
@@ -31,8 +32,19 @@ function main() {
   console.log("Hello world!");
   console.log(`Bugs:\n${bugs}`);
 
-  GUI.getInstance(GAME).refresh();
-  loop();
+  GUI.getInstance(GAME).refresh(true);
+
+  window.addEventListener("keydown", e => {
+    if (gameStarted) {
+      return;
+    }    
+
+    if (e.key === " ") {
+      gameStarted = true;
+      canvas.dispatchEvent(new Event(GameEvent.BallBefore));
+      loop();
+    }
+  });
 }
 
 window.addEventListener("load", main);

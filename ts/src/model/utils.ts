@@ -30,6 +30,7 @@ enum EffectEvent {
 
 enum GameEvent {
   BallBefore = "ballBefore",
+  BallAfter = "ballAfter",
   BallPaddleCollision = "ballPaddleCollision",
 }
 

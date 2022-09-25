@@ -2,13 +2,20 @@ enum GUIEvent {
   AnimateBallBefore = "animateBallBefore",
 }
 
+interface AnimationProps {
+  ballAlpha: number;
+  ballArrowAlpha: number;
+}
+
 class GUI {
   private static instance: GUI;
   private game: Game;
   private keyDown = new Map<string, boolean>();
 
-  // TODO Do these properties belong here?
-  private ballAlpha = 1;
+  private props: AnimationProps = {
+    ballAlpha: 1,
+    ballArrowAlpha: 1,
+  }
 
   private constructor(game: Game) {
     this.game = game;
@@ -48,7 +55,7 @@ class GUI {
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
     ctx.fillStyle = GUIData.ball.colour;
-    ctx.globalAlpha = this.ballAlpha;
+    ctx.globalAlpha = this.props.ballAlpha;
     ctx.fill();
     ctx.restore();
   }
@@ -59,6 +66,7 @@ class GUI {
     ctx.save();
     ctx.translate(ball.x, ball.y);
     ctx.rotate(ball.getDir());
+    ctx.globalAlpha = this.props.ballArrowAlpha;
     ctx.drawImage(img.arrowUp, -w/2, -w/2, w, w);
     ctx.restore();
   }
@@ -97,17 +105,21 @@ class GUI {
     ctx.drawImage(img.foreground, 0, 0, canvas.width, canvas.height);
   }
 
-  refresh(): void {
+  refresh(noBall = false): void {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     this.drawBackground();
     this.drawPaddle(this.game.topPaddle);
     this.drawPaddle(this.game.bottomPaddle);
     this.drawEffectBlocks();
-    this.drawBall(this.game.getBall());
-    if (this.game.getPointStatus() === PointStatus.Before) {
-      this.drawArrow();
+
+    if (!noBall) {
+      this.drawBall(this.game.getBall());
+      if (this.game.getPointStatus() === PointStatus.Before) {
+        this.drawArrow();
+      }
     }
+
     this.drawForeground();
   }
 
@@ -123,9 +135,16 @@ class GUI {
     });
 
     canvas.addEventListener(GUIEvent.AnimateBallBefore, _ => {
-      this.ballAlpha = 0;
+      this.props.ballAlpha = 0;
+      this.props.ballArrowAlpha = 0;
 
-      gsap.to(this, { ballAlpha: 1 });
+      gsap.timeline()
+        .to(this.props, { ballAlpha: 1, duration: 0.25, delay: 0.2 })
+        // TODO Refactor
+        .set(this.props, { ballArrowAlpha: 1, delay: 0.5 })
+        .set(this.props, { ballArrowAlpha: 0, delay: 0.15 })
+        .set(this.props, { ballArrowAlpha: 1, delay: 0.15 })
+        .set(this.props, { ballArrowAlpha: 0, delay: 0.15 });
     });
   }
 }

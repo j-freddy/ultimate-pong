@@ -18,7 +18,7 @@ class Game {
     this.topPaddle = new Paddle(canvas.width / 2, 32);
     this.bottomPaddle = new Paddle(canvas.width / 2, canvas.height - 32);
     this.effectsResidue = new Map<EffectEvent, number>();
-    this.prepareNewPoint();
+    this.init();
   }
 
   getBall(): Ball {
@@ -33,11 +33,15 @@ class Game {
     return this.pointStatus;
   }
 
-  private prepareNewPoint(): void {
+  private init(): void {
     this.ball = new Ball(canvas.width / 2, canvas.height / 2);
     this.effectBlocks = [];
     this.rallyCount = 0;
     this.pointStatus = PointStatus.Before;
+  }
+
+  private prepareNewPoint(): void {
+    this.init();
     this.eventHandler.dispatchEvent(new Event(GameEvent.BallBefore));
   }
 
@@ -78,10 +82,11 @@ class Game {
         // Check point ends
         if (outOfBounds) {
           this.pointStatus = PointStatus.After;
+          this.eventHandler.dispatchEvent(new Event(GameEvent.BallAfter));
         }
+
         break;
-      case PointStatus.After:
-        this.prepareNewPoint();
+      default:
         break;
     }
   }
@@ -91,7 +96,11 @@ class Game {
 
     handler.addEventListener(GameEvent.BallBefore, _ => {
       handler.dispatchEvent(new Event(GUIEvent.AnimateBallBefore));
-      setTimeout(() => this.pointStatus = PointStatus.Playing, 1000);
+      setTimeout(() => this.pointStatus = PointStatus.Playing, 1500);
+    });
+
+    handler.addEventListener(GameEvent.BallAfter, _ => {
+      this.prepareNewPoint();
     });
 
     handler.addEventListener(GameEvent.BallPaddleCollision, _ => {
