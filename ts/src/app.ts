@@ -1,6 +1,8 @@
 const canvas = <HTMLCanvasElement> document.getElementById("main-canvas");
 const ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
 
+// GUI data depends on canvas
+// So initialise it after fetching canvas
 const GUIData = getGUIData();
 
 let gameStarted = false;

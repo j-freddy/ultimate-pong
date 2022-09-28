@@ -17,6 +17,11 @@ function getGUIData() {
     },
     effectBlock: {
       radius: u,
-    }
+    },
+    score: {
+      fontSize: 96,
+      fontFamily: "Verdana",
+      colour: "#212529",
+    },
   };
 }

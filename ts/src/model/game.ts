@@ -1,6 +1,7 @@
 class Game {
   private readonly eventHandler: EventTarget;
 
+  private readonly effectDuration: number;
   readonly topPaddle: Paddle;
   readonly bottomPaddle: Paddle;
   private ball!: Ball;
@@ -17,6 +18,7 @@ class Game {
   constructor(eventHandler: EventTarget) {
     this.eventHandler = eventHandler;
     this.startEventListeners();
+    this.effectDuration = 5000;
     this.topPaddle = new Paddle(canvas.width / 2, 32);
     this.bottomPaddle = new Paddle(canvas.width / 2, canvas.height - 32);
     this.effectsResidue = new Map<EffectEvent, number>();
@@ -115,7 +117,8 @@ class Game {
 
     handler.addEventListener(GameEvent.BallBefore, _ => {
       handler.dispatchEvent(new Event(GUIEvent.AnimateBallBefore));
-      setTimeout(() => this.pointStatus = PointStatus.Playing, 1500);
+      // TODO Dependency on GUI animation
+      setTimeout(() => this.pointStatus = PointStatus.Playing, 2800);
     });
 
     handler.addEventListener(GameEvent.BallAfter, _ => {
@@ -136,7 +139,10 @@ class Game {
       this.ball.setFastSpeed();
 
       this.clearResidue(EffectEvent.FastBall);
-      const threadId = setTimeout(() => this.ball.setNormalSpeed(), 5000);
+      const threadId = setTimeout(
+        () => this.ball.setNormalSpeed(),
+        this.effectDuration
+      );
       this.effectsResidue.set(EffectEvent.FastBall, threadId);
     });
 
@@ -148,7 +154,7 @@ class Game {
       const threadId = setTimeout(() => {
         this.topPaddle.setNormalWidth();
         this.bottomPaddle.setNormalWidth();
-      }, 5000);
+      }, this.effectDuration);
       this.effectsResidue.set(EffectEvent.BigPaddle, threadId);
     });
   }

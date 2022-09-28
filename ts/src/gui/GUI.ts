@@ -5,6 +5,7 @@ enum GUIEvent {
 interface AnimationProps {
   ballAlpha: number;
   ballArrowAlpha: number;
+  scoreAlpha: number;
 }
 
 class GUI {
@@ -15,6 +16,7 @@ class GUI {
   private props: AnimationProps = {
     ballAlpha: 1,
     ballArrowAlpha: 1,
+    scoreAlpha: 1,
   }
 
   private constructor(game: Game) {
@@ -72,12 +74,15 @@ class GUI {
   }
 
   drawScore(): void {
-    // ctx.save();
-    // const score = `${this.game.getBottomScore()} : ${this.game.getTopScore()}`;
-    // ctx.font = "36px serif";
-    // ctx.textAlign = "center";
-    // ctx.fillText(score, canvas.width / 2, canvas.height / 2);
-    // ctx.restore();
+    ctx.save();
+    const score = `${this.game.getBottomScore()} : ${this.game.getTopScore()}`;
+    ctx.font = `${GUIData.score.fontSize}px ${GUIData.score.fontFamily}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = GUIData.score.colour;
+    ctx.globalAlpha = this.props.scoreAlpha;
+    ctx.fillText(score, canvas.width / 2, canvas.height / 2);
+    ctx.restore();
   }
 
   drawEffectBlocks(): void {
@@ -147,11 +152,13 @@ class GUI {
     canvas.addEventListener(GUIEvent.AnimateBallBefore, _ => {
       this.props.ballAlpha = 0;
       this.props.ballArrowAlpha = 0;
+      this.props.scoreAlpha = 1;
 
       gsap.timeline()
-        .to(this.props, { ballAlpha: 1, duration: 0.25, delay: 0.2 })
+        .set(this.props, { scoreAlpha: 0, delay: 1.25 })
+        .to(this.props, { ballAlpha: 1, duration: 0.25, delay: 0.35 })
         // TODO Refactor
-        .set(this.props, { ballArrowAlpha: 1, delay: 0.5 })
+        .set(this.props, { ballArrowAlpha: 1, delay: 0.4 })
         .set(this.props, { ballArrowAlpha: 0, delay: 0.15 })
         .set(this.props, { ballArrowAlpha: 1, delay: 0.15 })
         .set(this.props, { ballArrowAlpha: 0, delay: 0.15 });
