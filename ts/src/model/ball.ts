@@ -8,9 +8,14 @@ class Ball implements Circle {
   private dir: direction;
   private lastCollision?: Surface;
 
-  constructor(x: number, y: number) {
+  constructor(x: number, y: number, toPlayer: Player) {
     this.pos = new Point(x, y);
-    this.dir = randomNumber(Math.PI * 0.75, Math.PI * 1.25);
+    // TODO Is it worth creating a direction class and normalising it whenever
+    // the direction is set?
+    this.dir = toPlayer === Player.Bottom ?
+      randomNumber(Math.PI * 0.75, Math.PI * 1.25) :
+      randomNumber(-Math.PI * 0.25, Math.PI * 0.25);
+    this.normaliseDirection();
     this.speed = this.normalSpeed;
   }
 
@@ -33,7 +38,7 @@ class Ball implements Circle {
   setFastSpeed(): void {
     this.speed = this.fastSpeed;
   }
-
+  
   private normaliseDirection(): void {
     this.dir = mod(this.dir, Math.PI * 2);
   }
@@ -72,7 +77,7 @@ class Ball implements Circle {
     topPaddle: Paddle,
     bottomPaddle: Paddle,
     eventHandler: EventTarget
-  ): PointWinner | void {
+  ): Player | void {
     this.pos.move(this.speed, this.dir);
 
     // Bounce left and right edge
@@ -108,7 +113,7 @@ class Ball implements Circle {
     }
 
     // Out of bounds
-    if (this.y < -this.r)                return PointWinner.BottomPlayer;
-    if (this.y > canvas.height + this.r) return PointWinner.TopPlayer;
+    if (this.y < -this.r)                return Player.Bottom;
+    if (this.y > canvas.height + this.r) return Player.Top;
   }
 }

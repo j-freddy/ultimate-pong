@@ -34,9 +34,9 @@ enum GameEvent {
   BallPaddleCollision = "ballPaddleCollision",
 }
 
-enum PointWinner {
-  TopPlayer = "topPlayer",
-  BottomPlayer = "bottomPlayer",
+enum Player {
+  Top = "topPlayer",
+  Bottom = "bottomPlayer",
 }
 
 type ModelEvent = EffectEvent | GameEvent;

@@ -47,8 +47,15 @@ class Game {
     return this.bottomScore;
   }
 
+  getTotalScore(): number {
+    return this.topScore + this.bottomScore;
+  }
+
   private init(): void {
-    this.ball = new Ball(canvas.width / 2, canvas.height / 2);
+    const ballTo = (this.getTotalScore() % 2 === 0) ?
+      Player.Bottom : Player.Top;
+    
+    this.ball = new Ball(canvas.width / 2, canvas.height / 2, ballTo);
     this.effectBlocks = [];
     this.rallyCount = 0;
     this.pointStatus = PointStatus.Before;
@@ -85,7 +92,7 @@ class Game {
 
         // Check point ends
         if (pointWinner) {
-          if (pointWinner === PointWinner.TopPlayer) {
+          if (pointWinner === Player.Top) {
             this.topScore++;
           } else {
             this.bottomScore++;
