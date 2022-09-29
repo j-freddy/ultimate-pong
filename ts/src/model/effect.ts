@@ -32,4 +32,11 @@ const effectProperties = new Map<Effect, EffectProps>([
       blockImage: img.effectBigBall,
     }
   ],
+  [
+    Effect.BlinkingBall,
+    {
+      eventName: EffectEvent.BlinkingBall,
+      blockImage: img.effectBlinkingBall,
+    }
+  ],
 ]);

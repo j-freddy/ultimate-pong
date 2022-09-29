@@ -3,11 +3,14 @@ class Ball implements Circle {
   private readonly angleLimit = Math.PI * 0.12;
   private readonly baseSpeed = 2.4 * GUIData.scaleFactor;
   private readonly speedIncreaseFactor = 0.0007 * GUIData.scaleFactor;
+  readonly blinkDuration = 833;
+  private readonly invisDuration = 250;
   private radius: number;
   private speed: number;
   readonly pos: Point;
   private dir: direction;
   private lastCollision?: Surface;
+  private visible: boolean;
 
   constructor(x: number, y: number, toPlayer: Player) {
     this.radius = this.baseRadius;
@@ -19,6 +22,7 @@ class Ball implements Circle {
       randomNumber(-Math.PI * 0.25, Math.PI * 0.25);
     this.normaliseDirection();
     this.speed = this.baseSpeed;
+    this.visible = true;
   }
 
   get x(): number {
@@ -43,6 +47,10 @@ class Ball implements Circle {
 
   getDir(): direction {
     return this.dir;
+  }
+
+  getVisible(): boolean {
+    return this.visible;
   }
   
   private normaliseDirection(): void {
@@ -77,6 +85,11 @@ class Ball implements Circle {
     }
 
     return false;
+  }
+
+  blink() {
+    this.visible = false;
+    setTimeout(() => this.visible = true, this.invisDuration);
   }
 
   update(

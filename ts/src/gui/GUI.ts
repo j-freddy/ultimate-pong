@@ -53,11 +53,12 @@ class GUI {
   }
 
   drawBall(ball: Ball): void {
+    const visible = this.game.getBall().getVisible() ? 1 : 0;
     ctx.save();
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.r, 0, 2 * Math.PI);
     ctx.fillStyle = GUIData.ball.colour;
-    ctx.globalAlpha = this.props.ballAlpha;
+    ctx.globalAlpha = this.props.ballAlpha * visible;
     ctx.fill();
     ctx.restore();
   }

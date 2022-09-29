@@ -68,7 +68,12 @@ class Game {
 
   private addNewEffectBlock(): void {
     // TODO Indexing enums
-    const effects = [Effect.BigPaddle, Effect.SmallPaddle, Effect.BigBall];
+    const effects = [
+      Effect.BigPaddle,
+      Effect.SmallPaddle,
+      Effect.BigBall,
+      Effect.BlinkingBall
+    ];
     const effect = effects[randomInt(0, effects.length - 1)];
     const padding = 32 * GUIData.scaleFactor;
 
@@ -180,6 +185,22 @@ class Game {
         this.ball.setNormalRadius();
       }, this.effectDuration);
       this.effectsResidue.set(EffectEvent.BigBall, threadId);
+    });
+
+    handler.addEventListener(EffectEvent.BlinkingBall, _ => {
+      this.clearResidue(EffectEvent.BlinkingBall);
+
+      // Blink immediately
+      this.ball.blink();
+      // Blink consequently
+      const threadId = setInterval(() => {
+        this.ball.blink();
+      }, this.ball.blinkDuration);
+
+      setTimeout(() => {
+        clearInterval(threadId);
+      }, this.effectDuration);
+      this.effectsResidue.set(EffectEvent.BlinkingBall, threadId);
     });
   }
 
