@@ -24,6 +24,7 @@ enum PointStatus {
 enum EffectEvent {
   BigPaddle = "effectBigPaddle",
   SmallPaddle = "effectSmallPaddle",
+  BigBall = "effectBigBall",
   BlinkingBall = "effectBlinkingBall",
 }
 

@@ -1,14 +1,16 @@
 class Ball implements Circle {
-  readonly r = GUIData.ball.radius;
+  private readonly baseRadius = GUIData.blockUnit / 2;
   private readonly angleLimit = Math.PI * 0.12;
   private readonly baseSpeed = 2.4 * GUIData.scaleFactor;
   private readonly speedIncreaseFactor = 0.0007 * GUIData.scaleFactor;
+  private radius: number;
   private speed: number;
   readonly pos: Point;
   private dir: direction;
   private lastCollision?: Surface;
 
   constructor(x: number, y: number, toPlayer: Player) {
+    this.radius = this.baseRadius;
     this.pos = new Point(x, y);
     // TODO Is it worth creating a direction class and normalising it whenever
     // the direction is set?
@@ -25,6 +27,18 @@ class Ball implements Circle {
 
   get y(): number {
     return this.pos.getY();
+  }
+
+  get r(): number {
+    return this.radius;
+  }
+
+  setNormalRadius(): void {
+    this.radius = this.baseRadius;
+  }
+
+  setBigRadius(): void {
+    this.radius = this.baseRadius * 3;
   }
 
   getDir(): direction {

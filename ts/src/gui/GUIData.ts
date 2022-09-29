@@ -4,15 +4,12 @@ function getGUIData() {
 
   return {
     scaleFactor: u / 16,
+    blockUnit: u,
     ball: {
-      radius: u / 2,
       colour: "#1c7ed6",
       arrowWidth: u * 3,
     },
     paddle: {
-      width: u * 7,
-      height: u,
-      bigWidth: u * 10,
       colour: "#212529",
     },
     effectBlock: {

@@ -87,22 +87,7 @@ class GUI {
 
   drawEffectBlocks(): void {
     for (const effectBlock of this.game.getEffectBlocks()) {
-      // TODO This is slow
-      // Consider having a Map: Effect -> Image
-      let image: HTMLImageElement;
-
-      switch (effectBlock.effect) {
-        case Effect.BigPaddle:
-          image = img.effectBigPaddle;
-          break;
-        case Effect.SmallPaddle:
-          image = img.effectSmallPaddle;
-          break;
-        case Effect.BlinkingBall:
-          image = img.effectBlinkingBall;
-          break;
-      }
-
+      const image = effectProperties.get(effectBlock.effect)!.blockImage;
       const d = effectBlock.r * 2;
       ctx.drawImage(image, effectBlock.x - d/2, effectBlock.y - d/2, d, d);
     }

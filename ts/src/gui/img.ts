@@ -4,6 +4,7 @@ const img = {
   arrowUp: new Image(),
   effectBigPaddle: new Image(),
   effectSmallPaddle: new Image(),
+  effectBigBall: new Image(),
   effectBlinkingBall: new Image(),
 };
 
@@ -12,4 +13,5 @@ img.background.src = "img/background.svg";
 img.arrowUp.src = "img/arrow-up.svg";
 img.effectBigPaddle.src = "img/effects/big-paddle.svg";
 img.effectSmallPaddle.src = "img/effects/small-paddle.svg";
+img.effectBigBall.src = "img/effects/big-ball.svg";
 img.effectBlinkingBall.src = "img/effects/blinking-ball.svg";

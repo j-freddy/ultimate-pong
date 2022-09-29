@@ -68,7 +68,7 @@ class Game {
 
   private addNewEffectBlock(): void {
     // TODO Indexing enums
-    const effects = [Effect.BigPaddle];
+    const effects = [Effect.BigPaddle, Effect.SmallPaddle, Effect.BigBall];
     const effect = effects[randomInt(0, effects.length - 1)];
     const padding = 32 * GUIData.scaleFactor;
 
@@ -148,11 +148,38 @@ class Game {
       this.bottomPaddle.setBigWidth();
 
       this.clearResidue(EffectEvent.BigPaddle);
+      this.clearResidue(EffectEvent.SmallPaddle);
+
       const threadId = setTimeout(() => {
         this.topPaddle.setNormalWidth();
         this.bottomPaddle.setNormalWidth();
       }, this.effectDuration);
       this.effectsResidue.set(EffectEvent.BigPaddle, threadId);
+    });
+
+    handler.addEventListener(EffectEvent.SmallPaddle, _ => {
+      this.topPaddle.setSmallWidth();
+      this.bottomPaddle.setSmallWidth();
+
+      this.clearResidue(EffectEvent.BigPaddle);
+      this.clearResidue(EffectEvent.SmallPaddle);
+
+      const threadId = setTimeout(() => {
+        this.topPaddle.setNormalWidth();
+        this.bottomPaddle.setNormalWidth();
+      }, this.effectDuration);
+      this.effectsResidue.set(EffectEvent.SmallPaddle, threadId);
+    });
+
+    handler.addEventListener(EffectEvent.BigBall, _ => {
+      this.ball.setBigRadius();
+
+      this.clearResidue(EffectEvent.BigBall);
+
+      const threadId = setTimeout(() => {
+        this.ball.setNormalRadius();
+      }, this.effectDuration);
+      this.effectsResidue.set(EffectEvent.BigBall, threadId);
     });
   }
 

@@ -1,18 +1,16 @@
 class Paddle implements Rectangle {
-  readonly normalWidth = GUIData.paddle.width;
-  readonly bigWidth = GUIData.paddle.bigWidth;
+  readonly normalWidth = GUIData.blockUnit * 7;
   readonly spinFactor = 0.012;
 
-  // TODO Dangerous public property
-  width;
-  readonly height = GUIData.paddle.height;
+  private w;
+  readonly height = GUIData.blockUnit;
   private readonly acc = GUIData.scaleFactor; 
   private readonly mu = 0.88;
   readonly pos: Point;
   private vel: number;
 
   constructor(x: number, y: number) {
-    this.width = this.normalWidth;
+    this.w = this.normalWidth;
     this.pos = new Point(x, y);
     this.vel = 0;
   }
@@ -25,16 +23,24 @@ class Paddle implements Rectangle {
     return this.pos.getY();
   }
 
+  get width(): number {
+    return this.w;
+  }
+
   getVel(): number {
     return this.vel;
   }
 
   setNormalWidth(): void {
-    this.width = this.normalWidth;
+    this.w = this.normalWidth;
   }
 
   setBigWidth(): void {
-    this.width = this.bigWidth;
+    this.w = this.normalWidth * 1.4;
+  }
+
+  setSmallWidth(): void {
+    this.w = this.normalWidth * 0.7;
   }
 
   update(movePaddle: MovePaddle) {
@@ -48,8 +54,8 @@ class Paddle implements Rectangle {
     this.vel *= this.mu;
 
     // Hit edge
-    const leftEdge = this.width / 2;
-    const rightEdge = canvas.width - this.width / 2;
+    const leftEdge = this.w / 2;
+    const rightEdge = canvas.width - this.w / 2;
 
     if (this.x < leftEdge || this.x > rightEdge) {
       this.vel = 0;
