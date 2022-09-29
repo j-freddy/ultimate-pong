@@ -2,7 +2,7 @@ class Ball implements Circle {
   private readonly baseRadius = GUIData.blockUnit / 2;
   private readonly angleLimit = Math.PI * 0.12;
   private readonly baseSpeed = 2.4 * GUIData.scaleFactor;
-  private readonly speedIncreaseFactor = 0.0007 * GUIData.scaleFactor;
+  private readonly speedIncreaseFactor = 0.0008 * GUIData.scaleFactor;
   readonly blinkDuration = 833;
   private readonly invisDuration = 250;
   private radius: number;
