@@ -1,8 +1,8 @@
 class Ball implements Circle {
   readonly r = GUIData.ball.radius;
   private readonly angleLimit = Math.PI * 0.12;
-  private readonly normalSpeed = 3.8 * GUIData.scaleFactor;
-  private readonly fastSpeed = 5.6 * GUIData.scaleFactor;
+  private readonly baseSpeed = 2.4 * GUIData.scaleFactor;
+  private readonly speedIncreaseFactor = 0.0007 * GUIData.scaleFactor;
   private speed: number;
   readonly pos: Point;
   private dir: direction;
@@ -16,7 +16,7 @@ class Ball implements Circle {
       randomNumber(Math.PI * 0.75, Math.PI * 1.25) :
       randomNumber(-Math.PI * 0.25, Math.PI * 0.25);
     this.normaliseDirection();
-    this.speed = this.normalSpeed;
+    this.speed = this.baseSpeed;
   }
 
   get x(): number {
@@ -29,14 +29,6 @@ class Ball implements Circle {
 
   getDir(): direction {
     return this.dir;
-  }
-
-  setNormalSpeed(): void {
-    this.speed = this.normalSpeed;
-  }
-
-  setFastSpeed(): void {
-    this.speed = this.fastSpeed;
   }
   
   private normaliseDirection(): void {
@@ -115,5 +107,8 @@ class Ball implements Circle {
     // Out of bounds
     if (this.y < -this.r)                return Player.Bottom;
     if (this.y > canvas.height + this.r) return Player.Top;
+
+    // Increase speed
+    this.speed += this.speedIncreaseFactor;
   }
 }

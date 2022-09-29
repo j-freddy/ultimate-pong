@@ -92,9 +92,6 @@ class GUI {
       let image: HTMLImageElement;
 
       switch (effectBlock.effect) {
-        case Effect.FastBall:
-          image = img.effectFastBall;
-          break;
         case Effect.BigPaddle:
           image = img.effectBigPaddle;
           break;

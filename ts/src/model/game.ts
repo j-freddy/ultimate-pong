@@ -68,12 +68,13 @@ class Game {
 
   private addNewEffectBlock(): void {
     // TODO Indexing enums
-    const effects = [Effect.FastBall, Effect.BigPaddle];
+    const effects = [Effect.BigPaddle];
     const effect = effects[randomInt(0, effects.length - 1)];
+    const padding = 32 * GUIData.scaleFactor;
 
     const block = new EffectBlock(
       effect,
-      randomNumber(0, canvas.width),
+      randomNumber(padding, canvas.width - padding),
       canvas.height / 2
     );
     this.effectBlocks.push(block);
@@ -140,17 +141,6 @@ class Game {
       if (this.rallyCount % 3 === 1 && this.rallyCount >= 4) {
         this.addNewEffectBlock();
       }
-    });
-
-    handler.addEventListener(EffectEvent.FastBall, _ => {
-      this.ball.setFastSpeed();
-
-      this.clearResidue(EffectEvent.FastBall);
-      const threadId = setTimeout(
-        () => this.ball.setNormalSpeed(),
-        this.effectDuration
-      );
-      this.effectsResidue.set(EffectEvent.FastBall, threadId);
     });
 
     handler.addEventListener(EffectEvent.BigPaddle, _ => {

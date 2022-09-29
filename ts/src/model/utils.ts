@@ -22,7 +22,6 @@ enum PointStatus {
 
 // TODO Add GUIEvent for animateBallBefore, etc.
 enum EffectEvent {
-  FastBall = "effectFastBall",
   BigPaddle = "effectBigPaddle",
   SmallPaddle = "effectSmallPaddle",
   BlinkingBall = "effectBlinkingBall",

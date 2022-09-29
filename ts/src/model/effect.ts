@@ -1,5 +1,4 @@
 enum Effect {
-  FastBall = "FastBall",
   BigPaddle = "BigPaddle",
   SmallPaddle = "SmallPaddle",
   BlinkingBall = "BlinkingBall",
@@ -12,12 +11,6 @@ interface EffectProps {
 }
 
 const effectProperties = new Map<Effect, EffectProps>([
-  [
-    Effect.FastBall,
-    {
-      eventName: EffectEvent.FastBall,
-    }
-  ],
   [
     Effect.BigPaddle,
     {
