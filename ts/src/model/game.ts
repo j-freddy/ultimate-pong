@@ -152,6 +152,7 @@ class Game {
     });
 
     handler.addEventListener(GameEvent.BallAfter, _ => {
+      handler.dispatchEvent(new Event(GUIEvent.AnimateBallAfter));
       this.prepareNewPoint();
     });
 

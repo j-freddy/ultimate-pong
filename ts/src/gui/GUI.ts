@@ -1,5 +1,6 @@
 enum GUIEvent {
   AnimateBallBefore = "animateBallBefore",
+  AnimateBallAfter = "animateBallAfter",
   AnimateFreezingMode = "animateFreezingMode",
 }
 
@@ -9,6 +10,7 @@ interface AnimationProps {
   scoreAlpha: number;
   iciclesAlpha: number;
   iciclesSize: number;
+  afterPointHueAlpha: number;
 }
 
 class GUI {
@@ -22,6 +24,7 @@ class GUI {
     scoreAlpha: 1,
     iciclesAlpha: 0,
     iciclesSize: 512,
+    afterPointHueAlpha: 0,
   }
 
   private constructor(game: Game) {
@@ -112,6 +115,12 @@ class GUI {
   drawBackground(): void {
     ctx.drawImage(img.background, 0, 0, canvas.width, canvas.height);
 
+    ctx.save();
+    ctx.fillStyle = GUIData.afterPointHue.colour;
+    ctx.globalAlpha = this.props.afterPointHueAlpha;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+
     if (this.game.isSlipperyMode()) {
       ctx.save();
       ctx.globalAlpha = this.props.iciclesAlpha;
@@ -179,6 +188,14 @@ class GUI {
         .set(this.props, { ballArrowAlpha: 0, delay: 0.15 })
         .set(this.props, { ballArrowAlpha: 1, delay: 0.15 })
         .set(this.props, { ballArrowAlpha: 0, delay: 0.15 });
+    });
+
+    canvas.addEventListener(GUIEvent.AnimateBallAfter, _ => {
+      this.props.afterPointHueAlpha = 0;
+
+      gsap.timeline()
+        .to(this.props, { afterPointHueAlpha: 0.5, duration: 0.15 })
+        .to(this.props, { afterPointHueAlpha: 0, duration: 0.15 });
     });
 
     canvas.addEventListener(GUIEvent.AnimateFreezingMode, _ => {

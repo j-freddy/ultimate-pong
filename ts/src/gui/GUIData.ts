@@ -24,6 +24,9 @@ function getGUIData() {
       fontSize: 42,
       fontFamily: "Verdana",
       colour: "#212529",
+    },
+    afterPointHue: {
+      colour: "#ff6b6b",
     }
   };
 }
