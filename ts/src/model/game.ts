@@ -85,10 +85,10 @@ class Game {
   private addNewEffectBlock(): void {
     // TODO Indexing enums
     const effects = [
-      Effect.BigPaddle,
-      Effect.SmallPaddle,
-      Effect.BigBall,
-      Effect.BlinkingBall,
+      // Effect.BigPaddle,
+      // Effect.SmallPaddle,
+      // Effect.BigBall,
+      // Effect.BlinkingBall,
       Effect.SlipperyPaddle,
     ];
     const effect = effects[randomInt(0, effects.length - 1)];

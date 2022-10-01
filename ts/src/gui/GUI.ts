@@ -116,7 +116,10 @@ class GUI {
     ctx.drawImage(img.background, 0, 0, canvas.width, canvas.height);
 
     ctx.save();
-    ctx.fillStyle = GUIData.afterPointHue.colour;
+    ctx.fillStyle = this.game.isSlipperyMode() ?
+      GUIData.afterPointHue.freezingColour :
+      GUIData.afterPointHue.colour;
+
     ctx.globalAlpha = this.props.afterPointHueAlpha;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();

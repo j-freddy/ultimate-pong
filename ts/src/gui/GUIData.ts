@@ -27,6 +27,7 @@ function getGUIData() {
     },
     afterPointHue: {
       colour: "#ff6b6b",
+      freezingColour: "#3bc9db",
     }
   };
 }
