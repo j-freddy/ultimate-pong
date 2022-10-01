@@ -3,6 +3,7 @@ enum Effect {
   SmallPaddle = "SmallPaddle",
   BigBall = "Bigball",
   BlinkingBall = "BlinkingBall",
+  SlipperyPaddle = "SlipperyPaddle",
 }
 
 interface EffectProps {
@@ -37,6 +38,13 @@ const effectProperties = new Map<Effect, EffectProps>([
     {
       eventName: EffectEvent.BlinkingBall,
       blockImage: img.effectBlinkingBall,
+    }
+  ],
+  [
+    Effect.SlipperyPaddle,
+    {
+      eventName: EffectEvent.SlipperyPaddle,
+      blockImage: img.effectSlipperyPaddle,
     }
   ],
 ]);

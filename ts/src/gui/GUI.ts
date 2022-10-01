@@ -1,11 +1,14 @@
 enum GUIEvent {
   AnimateBallBefore = "animateBallBefore",
+  AnimateFreezingMode = "animateFreezingMode",
 }
 
 interface AnimationProps {
   ballAlpha: number;
   ballArrowAlpha: number;
   scoreAlpha: number;
+  iciclesAlpha: number;
+  iciclesSize: number;
 }
 
 class GUI {
@@ -17,6 +20,8 @@ class GUI {
     ballAlpha: 1,
     ballArrowAlpha: 1,
     scoreAlpha: 1,
+    iciclesAlpha: 0,
+    iciclesSize: 512,
   }
 
   private constructor(game: Game) {
@@ -74,6 +79,16 @@ class GUI {
     ctx.restore();
   }
 
+  drawInitialMessage(): void {
+    const msgData = GUIData.initialMessage;
+    ctx.save();
+    ctx.font = `${msgData.fontSize}px ${msgData.fontFamily}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("SPACE TO START", canvas.width / 2, canvas.height / 2);
+    ctx.restore();
+  }
+
   drawScore(): void {
     ctx.save();
     const score = `${this.game.getBottomScore()} : ${this.game.getTopScore()}`;
@@ -96,26 +111,45 @@ class GUI {
 
   drawBackground(): void {
     ctx.drawImage(img.background, 0, 0, canvas.width, canvas.height);
+
+    if (this.game.isSlipperyMode()) {
+      ctx.save();
+      ctx.globalAlpha = this.props.iciclesAlpha;
+      ctx.drawImage(
+        img.icicles,
+        canvas.width / 2 - this.props.iciclesSize / 2,
+        canvas.height / 2 - this.props.iciclesSize / 2,
+        this.props.iciclesSize,
+        this.props.iciclesSize
+      );
+      ctx.restore();
+    }
   }
 
   drawForeground(): void {
-    ctx.drawImage(img.foreground, 0, 0, canvas.width, canvas.height);
+    const image = this.game.isSlipperyMode() ?
+      img.freezingForeground :
+      img.foreground;
+
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
   }
 
-  refresh(noBall = false): void {
+  refresh(): void {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     this.drawBackground();
     this.drawPaddle(this.game.topPaddle);
     this.drawPaddle(this.game.bottomPaddle);
-    this.drawEffectBlocks();
 
-    if (!noBall) {
+    if (this.game.getStarted()) {
+      this.drawEffectBlocks();
       this.drawBall(this.game.getBall());
       if (this.game.getPointStatus() === PointStatus.Before) {
         this.drawArrow();
         this.drawScore();
       }
+    } else {
+      this.drawInitialMessage();
     }
 
     this.drawForeground();
@@ -145,6 +179,15 @@ class GUI {
         .set(this.props, { ballArrowAlpha: 0, delay: 0.15 })
         .set(this.props, { ballArrowAlpha: 1, delay: 0.15 })
         .set(this.props, { ballArrowAlpha: 0, delay: 0.15 });
+    });
+
+    canvas.addEventListener(GUIEvent.AnimateFreezingMode, _ => {
+      this.props.iciclesAlpha = 0.5;
+      this.props.iciclesSize = 128;
+
+      gsap.timeline()
+        .to(this.props, { iciclesAlpha: 0, duration: 0.5 })
+        .to(this.props, { iciclesSize: 512, duration: 0.5 }, "<");
     });
   }
 }

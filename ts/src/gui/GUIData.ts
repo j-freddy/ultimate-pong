@@ -20,5 +20,10 @@ function getGUIData() {
       fontFamily: "Verdana",
       colour: "#212529",
     },
+    initialMessage: {
+      fontSize: 42,
+      fontFamily: "Verdana",
+      colour: "#212529",
+    }
   };
 }

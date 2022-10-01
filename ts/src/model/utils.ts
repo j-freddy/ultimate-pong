@@ -26,6 +26,7 @@ enum EffectEvent {
   SmallPaddle = "effectSmallPaddle",
   BigBall = "effectBigBall",
   BlinkingBall = "effectBlinkingBall",
+  SlipperyPaddle = "effectSlipperyPaddle",
 }
 
 enum GameEvent {

@@ -1,11 +1,12 @@
 class Paddle implements Rectangle {
   readonly normalWidth = GUIData.blockUnit * 7;
+  readonly normalMu = 0.88;
   readonly spinFactor = 0.012;
 
   private w;
   readonly height = GUIData.blockUnit;
   private readonly acc = GUIData.scaleFactor; 
-  private readonly mu = 0.88;
+  private mu = this.normalMu;
   readonly pos: Point;
   private vel: number;
 
@@ -41,6 +42,14 @@ class Paddle implements Rectangle {
 
   setSmallWidth(): void {
     this.w = this.normalWidth * 0.7;
+  }
+
+  setNormalMu(): void {
+    this.mu = this.normalMu;
+  }
+
+  setSlippery(): void {
+    this.mu = this.normalMu + (1 - this.normalMu) * 2 / 3;
   }
 
   update(movePaddle: MovePaddle) {

@@ -14,6 +14,8 @@ class Game {
   private rallyCount!: number;
   private topScore: number;
   private bottomScore: number;
+  private started: boolean;
+  private slipperyMode: boolean;
 
   constructor(eventHandler: EventTarget) {
     this.eventHandler = eventHandler;
@@ -25,6 +27,8 @@ class Game {
     this.topScore = 0;
     this.bottomScore = 0;
     this.init();
+    this.started = false;
+    this.slipperyMode = false;
   }
 
   getBall(): Ball {
@@ -51,6 +55,18 @@ class Game {
     return this.topScore + this.bottomScore;
   }
 
+  getStarted(): boolean {
+    return this.started;
+  }
+
+  setStarted(): void {
+    this.started = true;
+  }
+
+  isSlipperyMode(): boolean {
+    return this.slipperyMode;
+  }
+
   private init(): void {
     const ballTo = (this.getTotalScore() % 2 === 0) ?
       Player.Bottom : Player.Top;
@@ -69,10 +85,11 @@ class Game {
   private addNewEffectBlock(): void {
     // TODO Indexing enums
     const effects = [
-      Effect.BigPaddle,
-      Effect.SmallPaddle,
-      Effect.BigBall,
-      Effect.BlinkingBall
+      // Effect.BigPaddle,
+      // Effect.SmallPaddle,
+      // Effect.BigBall,
+      // Effect.BlinkingBall,
+      Effect.SlipperyPaddle,
     ];
     const effect = effects[randomInt(0, effects.length - 1)];
     const padding = 32 * GUIData.scaleFactor;
@@ -201,6 +218,22 @@ class Game {
         clearInterval(threadId);
       }, this.effectDuration);
       this.effectsResidue.set(EffectEvent.BlinkingBall, threadId);
+    });
+
+    handler.addEventListener(EffectEvent.SlipperyPaddle, _ => {
+      handler.dispatchEvent(new Event(GUIEvent.AnimateFreezingMode));
+      this.topPaddle.setSlippery();
+      this.bottomPaddle.setSlippery();
+      this.slipperyMode = true;
+
+      this.clearResidue(EffectEvent.BigBall);
+
+      const threadId = setTimeout(() => {
+        this.topPaddle.setNormalMu();
+        this.bottomPaddle.setNormalMu();
+        this.slipperyMode = false;
+      }, this.effectDuration);
+      this.effectsResidue.set(EffectEvent.BigBall, threadId);
     });
   }
 
