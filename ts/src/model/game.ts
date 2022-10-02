@@ -2,6 +2,7 @@ class Game {
   private readonly eventHandler: EventTarget;
 
   readonly singlePlayer: boolean;
+  readonly pointsToWin: number = 11;
   private readonly effectDuration: number;
   readonly topPaddle: Paddle;
   readonly bottomPaddle: Paddle;
@@ -111,7 +112,8 @@ class Game {
     this.effectBlocks.push(block);
   }
 
-  update(moveTopPaddle: MovePaddle, moveBottomPaddle: MovePaddle): void {
+  // Returns true if game ended
+  update(moveTopPaddle: MovePaddle, moveBottomPaddle: MovePaddle): boolean {
     // Top paddle is either a user or an AI
     if (this.singlePlayer) {
       this.topPaddle.update(this.ai!.choosePaddleMovement());
@@ -132,8 +134,10 @@ class Game {
         if (pointWinner) {
           if (pointWinner === Player.Top) {
             this.topScore++;
+            if (this.topScore >= this.pointsToWin) return true;
           } else {
             this.bottomScore++;
+            if (this.bottomScore >= this.pointsToWin) return true;
           }
 
           this.pointStatus = PointStatus.After;
@@ -155,6 +159,8 @@ class Game {
       default:
         break;
     }
+
+    return false;
   }
 
   private startEventListeners(): void {

@@ -92,16 +92,25 @@ class GUI {
     ctx.restore();
   }
 
-  drawScore(): void {
+  drawScore(alpha = this.props.scoreAlpha, outline = false): void {
     ctx.save();
     const score = `${this.game.getBottomScore()} : ${this.game.getTopScore()}`;
     ctx.font = `${GUIData.score.fontSize}px ${GUIData.score.fontFamily}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = GUIData.score.colour;
-    ctx.globalAlpha = this.props.scoreAlpha;
+    ctx.globalAlpha = alpha;
     ctx.fillText(score, canvas.width / 2, canvas.height / 2);
+    if (outline) {
+      ctx.lineWidth = GUIData.score.strokeWidth;
+      ctx.strokeStyle = GUIData.score.strokeColour;
+      ctx.strokeText(score, canvas.width / 2, canvas.height / 2);
+    }
     ctx.restore();
+  }
+
+  drawFinalScreen(): void {
+    this.drawScore(1, true);
   }
 
   drawEffectBlocks(): void {

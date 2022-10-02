@@ -17,17 +17,26 @@ function tick() {
   if (keyDown.get("ArrowLeft"))  moveBottomPaddle = MovePaddle.Left;
   if (keyDown.get("ArrowRight")) moveBottomPaddle = MovePaddle.Right;
 
-  GAME.update(moveTopPaddle, moveBottomPaddle);
+  const gameOver = GAME.update(moveTopPaddle, moveBottomPaddle);
   GUI.getInstance().refresh();
+
+  // TODO If this is not smooth, let gameOver be a property in GAME and trigger
+  // this at the end of GUIEvent.AnimateBallAfter using GreenSock
+  if (gameOver) {
+    clearInterval(mainThread);
+    GUI.getInstance().drawFinalScreen();
+  }
 }
 
 // Do not use requestAnimationFrame for projects involving moving objects
 // As it syncs calls to your refresh rate
 // Which depends per user
+let mainThread: threadId;
+
 function startLoop() {
   // DO NOT change fps, it affects game speed (unfortunately)
   const fps = 120;
-  setInterval(tick, 1000 / fps);
+  mainThread = setInterval(tick, 1000 / fps);
 }
 
 function main() {

@@ -19,6 +19,8 @@ function getGUIData() {
       fontSize: 96,
       fontFamily: "Verdana",
       colour: "#212529",
+      strokeColour: "#fab005",
+      strokeWidth: 4,
     },
     initialMessage: {
       fontSize: 42,
