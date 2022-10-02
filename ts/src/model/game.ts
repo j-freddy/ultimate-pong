@@ -1,6 +1,7 @@
 class Game {
   private readonly eventHandler: EventTarget;
 
+  readonly singlePlayer: boolean;
   private readonly effectDuration: number;
   readonly topPaddle: Paddle;
   readonly bottomPaddle: Paddle;
@@ -16,16 +17,24 @@ class Game {
   private bottomScore: number;
   private started: boolean;
   private slipperyMode: boolean;
+  private ai?: AI;
 
-  constructor(eventHandler: EventTarget) {
+  constructor(eventHandler: EventTarget, singlePlayer = false) {
     this.eventHandler = eventHandler;
     this.startEventListeners();
+    this.singlePlayer = singlePlayer;
     this.effectDuration = 5000;
     this.topPaddle = new Paddle(canvas.width / 2, 32);
     this.bottomPaddle = new Paddle(canvas.width / 2, canvas.height - 32);
     this.effectsResidue = new Map<EffectEvent, number>();
     this.topScore = 0;
     this.bottomScore = 0;
+
+    if (this.singlePlayer) {
+      this.ai = new AIShortSighted(this, this.topPaddle);
+      // this.ai = new AIPacifist();
+    }
+
     this.init();
     this.started = false;
     this.slipperyMode = false;
@@ -103,7 +112,13 @@ class Game {
   }
 
   update(moveTopPaddle: MovePaddle, moveBottomPaddle: MovePaddle): void {
-    this.topPaddle.update(moveTopPaddle);
+    // Top paddle is either a user or an AI
+    if (this.singlePlayer) {
+      this.topPaddle.update(this.ai!.choosePaddleMovement());
+    } else {
+      this.topPaddle.update(moveTopPaddle);
+    }
+    // Bottom paddle is always a user
     this.bottomPaddle.update(moveBottomPaddle);
 
     switch (this.pointStatus) {

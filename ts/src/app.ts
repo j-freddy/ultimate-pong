@@ -4,7 +4,7 @@ const ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
 // GUI data depends on canvas
 // So initialise it after fetching canvas
 const GUIData = getGUIData();
-const GAME = new Game(canvas);
+const GAME = new Game(canvas, true);
 
 function tick() {
   const keyDown = GUI.getInstance().keyDownMappings;
@@ -25,15 +25,13 @@ function tick() {
 // As it syncs calls to your refresh rate
 // Which depends per user
 function startLoop() {
+  // DO NOT change fps, it affects game speed (unfortunately)
   const fps = 120;
   setInterval(tick, 1000 / fps);
 }
 
 function main() {
-  let bugs = "";
-
   console.log("Hello world!");
-  console.log(`Bugs:\n${bugs}`);
 
   GUI.getInstance(GAME).refresh();
 
