@@ -7,3 +7,12 @@
   border: 1px solid #ced4da;
   border-radius: 4px;
 }
+
+.callout {
+  /* YELLOW 0 */
+  background-color: #fff9db;
+  /* YELLOW 3 */
+  border-left: 4px solid #ffe066;
+  padding: 1em;
+  margin-bottom: 1em;
+}
