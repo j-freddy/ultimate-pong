@@ -33,15 +33,19 @@ class GUI {
   }
 
   static getInstance(game?: Game): GUI {
-    if (!GUI.instance) {
-      if (game) {
-        GUI.instance = new GUI(game);
-      } else {
+    if (game) {
+      GUI.instance = new GUI(game);
+    } else {
+      if (!GUI.instance) {
         throw new Error("Instance does not exist and game is unspecified.");
       }
     }
 
     return GUI.instance;
+  }
+
+  switchContext(game: Game) {
+    this.game = game;
   }
 
   get keyDownMappings(): Map<string, boolean> {
@@ -88,7 +92,7 @@ class GUI {
     ctx.font = `${msgData.fontSize}px ${msgData.fontFamily}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText("SPACE TO START", canvas.width / 2, canvas.height / 2);
+    ctx.fillText("CLICK TO START", canvas.width / 2, canvas.height / 2);
     ctx.restore();
   }
 
@@ -178,6 +182,18 @@ class GUI {
 
   private startObservables(): void {
     console.log("Observables started.");
+
+    // Start new game
+    const newGameButton = <HTMLElement> document.getElementById("new-game");
+
+    newGameButton.addEventListener("click", _ => {
+      const mode = <HTMLElement> document.querySelector(
+        "input[name='mode']:checked"
+      );
+      const singlePlayer =  mode.id === "1-player";
+
+      switchContextToNewGame(singlePlayer);
+    });
 
     window.addEventListener("keydown", e => {
       this.keyDown.set(e.key, true);

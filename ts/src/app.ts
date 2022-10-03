@@ -4,7 +4,13 @@ const ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
 // GUI data depends on canvas
 // So initialise it after fetching canvas
 const GUIData = getGUIData();
-const GAME = new Game(canvas, true);
+let GAME = new Game(canvas, false);
+
+function switchContextToNewGame(singlePlayer: boolean) {
+  clearInterval(mainThread);
+  GAME = new Game(canvas, singlePlayer);
+  GUI.getInstance(GAME).refresh();
+}
 
 function tick() {
   const keyDown = GUI.getInstance().keyDownMappings;
@@ -44,16 +50,14 @@ function main() {
 
   GUI.getInstance(GAME).refresh();
 
-  window.addEventListener("keydown", e => {
+  canvas.addEventListener("click", _ => {
     if (GAME.getStarted()) {
       return;
-    }    
-
-    if (e.key === " ") {
-      GAME.setStarted();
-      canvas.dispatchEvent(new Event(GameEvent.BallBefore));
-      startLoop();
     }
+
+    GAME.setStarted();
+    canvas.dispatchEvent(new Event(GameEvent.BallBefore));
+    startLoop();
   });
 }
 
