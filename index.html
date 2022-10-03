@@ -11,41 +11,52 @@
 <body>
   <main class="d-flex justify-content-center">
     <div class="wrapper text-center">
-      <div>
-        <h1 class="mb-3 mt-4">Ultimate Pong</h1>
+      <h1 class="mb-3 mt-4">Ultimate Pong</h1>
 
-        <canvas id="main-canvas" width="480px" height="480px">
-          Your browser does not support canvas.
-        </canvas>
-      </div>
-      <div>
-        <button class="btn btn-dark mt-5 mb-3" type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#config">
-          Config
-        </button>
-        <div class="collapse multi-collapse" id="config">
-          <div class="card card-body">
-            <form>
-              <div class="btn-group" role="group"
-                   aria-label="Player toggle group">
-                <input type="radio" class="btn-check" name="mode"
-                       id="1-player" autocomplete="off" checked>
-                <label class="btn btn-outline-secondary" for="1-player">
-                  1 Player
-                </label>
-              
-                <input type="radio" class="btn-check" name="mode"
-                       id="2-player" autocomplete="off">
-                <label class="btn btn-outline-secondary" for="2-player">
-                  2 Player
-                </label>
-              </div>
-              <button type="button" class="btn btn-dark ms-5" id="new-game">
-                New Game
-              </button>
-            </form>
+      <canvas id="main-canvas" width="480px" height="480px">
+        Your browser does not support canvas.
+      </canvas>
+
+      <div class="game-info-container">
+        <div id="game-config">
+          <button class="btn btn-dark mt-5 mb-3" type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#config">
+            Config
+          </button>
+          <div class="collapse multi-collapse" id="config">
+            <div class="card card-body">
+              <form>
+                <div class="btn-group" role="group"
+                    aria-label="Player toggle group">
+                  <input type="radio" class="btn-check" name="mode"
+                        id="1-player" autocomplete="off" checked>
+                  <label class="btn btn-outline-secondary" for="1-player">
+                    1 Player
+                  </label>
+                
+                  <input type="radio" class="btn-check" name="mode"
+                        id="2-player" autocomplete="off">
+                  <label class="btn btn-outline-secondary" for="2-player">
+                    2 Player
+                  </label>
+                </div>
+                <button type="button" class="btn btn-dark ms-5" id="new-game">
+                  New Game
+                </button>
+              </form>
+            </div>
           </div>
+        </div>
+        <div id="game-instructions" class="text-start mt-4">
+          <h3>Instructions</h3>
+          <ul>
+            <li>Bottom paddle: Arrow keys</li>
+            <li>Top paddle: a & d keys</li>
+            <li>1 player: Control bottom paddle against AI</li>
+          </ul>
+
+          <p>First to 5 points wins. Good luck!</p>
         </div>
       </div>
     </div>

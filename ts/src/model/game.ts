@@ -2,7 +2,7 @@ class Game {
   private readonly eventHandler: EventTarget;
 
   readonly singlePlayer: boolean;
-  readonly pointsToWin: number = 11;
+  readonly pointsToWin: number = 5;
   private readonly effectDuration: number;
   readonly topPaddle: Paddle;
   readonly bottomPaddle: Paddle;
