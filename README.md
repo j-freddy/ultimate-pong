@@ -18,9 +18,14 @@ Alternatively, use the Makefile commands if you have the Make tool.
 
 - Bottom paddle: Arrow keys
 - Top paddle: a & d keys
-- 1 player: Control bottom paddle against AI
 
 First to 5 points wins. Good luck!
+
+### Playing against AI
+
+- 1 player: Control bottom paddle against AI
+
+Play against the AI via `Config > 1 Player > New Game`. Good luck!
 
 ### Advanced details
 
