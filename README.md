@@ -1,20 +1,8 @@
 # Ultimate Pong
 
-## Installation
-
 Play the game [here][1]!
 
-### Build
-
-This project is written in [TypeScript][2].
-
-```sh
-npm run build
-```
-
-Alternatively, use the Makefile commands if you have the Make tool.
-
-## Instructions
+# Instructions
 
 - Bottom paddle: Arrow keys
 - Top paddle: a & d keys
@@ -45,5 +33,14 @@ if you're interested.
 - Moving right takes priority over moving left. If you press both right and left
   keys, the paddle moves right.
 
+## Development
+
+### Build
+
+This project is written in TypeScript.
+```sh
+npm install
+npm run build
+```
+
 [1]: https://ultimate-pong.jtflabs.dev/
-[2]: https://www.typescriptlang.org/download
