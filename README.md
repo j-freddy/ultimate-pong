@@ -45,5 +45,5 @@ if you're interested.
 - Moving right takes priority over moving left. If you press both right and left
   keys, the paddle moves right.
 
-[1]: https://j-freddy.github.io/games/ultimate-pong/
+[1]: https://ultimate-pong.jtflabs.dev/
 [2]: https://www.typescriptlang.org/download
